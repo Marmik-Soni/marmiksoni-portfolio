@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marmik Soni – Digital Designer</title>
+<meta name="description" content="Marmik Soni designs and builds websites for founders and small businesses.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/style.css">
+<style>
+  /* Base Configuration - Using the Bezier DNA */
+  :root {
+    --font:   'Geist Sans', sans-serif; /* Vercel's Geist font */
+    --canvas: #F4F4F3;
+    --ink: #0f0f0f;
+    --soft: #777777;
+    --line: rgba(17, 17, 17, 0.1);
+    color-scheme: light;
+
+    /* Base scale mapped by JS (p=0 below 1024px, p=1 at 2560px) */
+    --p: 0.6;
+
+    /* Margins and Layout */
+    --m:      calc(24px + (80px - 24px) * var(--p));   /* page margin */
+    --gap:    calc(16px + (32px - 16px) * var(--p));   /* grid gutter */
+    --small:  calc(14px + (16px - 14px) * var(--p));   /* small text (nav, subtext) */
+
+    /* Huge Hero Typography */
+    /* Integrated clamp() into the base so mobile fluidly scales down before the Bezier curve takes over at 1024px */
+    --title:  min(calc(clamp(32px, 10vw, 120px) + (300px - clamp(32px, 10vw, 120px)) * var(--p)), 28svh);
+    --lh:     calc(0.92 + (0.86 - 0.92) * var(--p));    /* Exceedingly tight line height for massive text */
+    --track:  calc((-0.045 - 0.02 * var(--p)) * 1em);   /* Tighter kerning to match desktop density on mobile */
+    --wght:   500;                                      /* Slightly bolder for Inter to match Dimov's weight */
+  }
+
+  [data-theme="dark"] {
+    --canvas: #121212;
+    --ink: #F4F4F3;
+    --soft: #A0A0A0;
+    --line: rgba(244, 244, 243, 0.15);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: var(--small);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+
+  /* Grid Layout Architecture */
+  .page {
+    min-width: 320px;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 var(--m);
+  }
+
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+  }
+
+  /* --- Navigation Bar --- */
+  .bar {
+    align-items: center;
+    padding-top: calc(var(--m) * 0.8);
+    margin-bottom: calc(var(--m) * 2);
+  }
+
+  .bar-name {
+    grid-column: 1 / 4;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  .bar-nav {
+    grid-column: 4 / 10;
+    display: flex;
+    justify-content: center;
+    gap: calc(24px + (48px - 24px) * var(--p));
+    font-weight: 500;
+  }
+
+  .bar-theme {
+    grid-column: 10 / 13;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+  }
+
+  .bar-nav a, .bar-name, .bar-theme {
+    transition: opacity 0.25s ease;
+  }
+  .bar-nav a:hover, .bar-name:hover, .bar-theme:hover { opacity: 0.5; }
+
+  /* --- Hero Section --- */
+  .hero {
+    flex: 1;
+    align-content: flex-start; /* Fallback for older Android engines */
+    align-content: start; /* Pushes the massive text up towards the top */
+    padding-top: 15vh; /* Consistent breathing room from the top nav */
+    padding-bottom: var(--m);
+    position: relative;
+    /* Bulletproof top-alignment for older browsers that fail to parse align-content on grids */
+    grid-template-rows: auto auto 1fr;
+  }
+
+  .hero-title {
+    grid-area: 1 / 1 / 2 / -1;
+    font-size: var(--title);
+    font-weight: var(--wght);
+    line-height: var(--lh);
+    letter-spacing: var(--track);
+    /* Optical alignment for letter 'W' in Web */
+    margin-left: -0.05em; 
+  }
+
+  .hero-title span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .hero-lede {
+    /* Aligned precisely in Dimov's style: pushed right to accommodate the stacked '& Developer' string */
+    grid-area: 1 / 10 / 2 / 13;
+    align-self: end;
+    max-width: 32ch;
+    /* This calculation uses the Bezier properties to perfectly align the bottom baseline of the small text with the bottom baseline of the giant text, regardless of screen size. */
+    margin-bottom: calc(var(--title) * (var(--lh) * 0.5 - 0.35) - 0.4em);
+    margin-top: 0;
+    color: var(--ink);
+    font-weight: 400;
+    text-align: right; /* Explicitly right-align the paragraph globally */
+  }
+
+  /* Responsive fixes for mobile */
+  @media (max-width: 1024px) {
+    .bar-nav { display: none; } 
+    .bar-name { grid-column: 1 / 6; }
+    
+    /* Keep the strict 12-column grid to maintain character */
+    .hero {
+      padding-top: 15vh; /* Locks it to the top */
+      align-content: start;
+    }
+
+    .hero-title {
+      grid-area: auto;
+      grid-column: 1 / -1;
+      font-size: 15vw; 
+      line-height: 0.85; 
+      letter-spacing: -0.05em; 
+      margin-left: -0.05em; 
+    }
+
+    .hero-lede {
+      grid-area: auto;
+      grid-column: 4 / 13; /* Pushes the entire block to the right using the strict grid */
+      margin-top: 40px; /* Precise, tight lock-up */
+      margin-bottom: 0;
+      max-width: 100%;
+      font-size: 15px; 
+      line-height: 1.5;
+      text-align: right; /* User strictly prefers the right-aligned ragged left edge */
+    }
+  }
+</style>
+<script>
+  /* The DNA Bezier Easing */
+  (function () {
+    var MIN_W = 1024, MAX_W = 2560;
+    var X1 = 0.35, Y1 = 0.15, X2 = 0.65, Y2 = 0.85;
+
+    function bez(t, a, b) {
+      var u = 1 - t; return 3 * u * u * t * a + 3 * u * t * t * b + t * t * t;
+    }
+    function bezSlope(t, a, b) {
+      var u = 1 - t; return 3 * u * u * a + 6 * u * t * (b - a) + 3 * t * t * (1 - b);
+    }
+
+    function ease(x) {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      var t = x, i;
+      for (i = 0; i < 8; i++) {
+        var err = bez(t, X1, X2) - x;
+        if (Math.abs(err) < 1e-6) break;
+        var s = bezSlope(t, X1, X2);
+        if (Math.abs(s) < 1e-6) break;
+        t -= err / s;
+      }
+      if (!(t >= 0 && t <= 1) || Math.abs(bez(t, X1, X2) - x) > 1e-4) {
+        var lo = 0, hi = 1; t = x;
+        for (i = 0; i < 30; i++) {
+          if (bez(t, X1, X2) < x) lo = t; else hi = t;
+          t = (lo + hi) / 2;
+        }
+      }
+      return bez(t, Y1, Y2);
+    }
+
+    var root = document.documentElement, frame;
+    function update() {
+      var w = root.clientWidth || window.innerWidth;
+      var p = ease((w - MIN_W) / (MAX_W - MIN_W));
+      root.style.setProperty("--p", p.toFixed(4));
+    }
+
+    update();
+    window.addEventListener("resize", function () {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    });
+
+    // Theme toggler
+    window.addEventListener("DOMContentLoaded", function() {
+      const btn = document.querySelector('.bar-theme');
+      const text = btn.querySelector('.theme-text');
+      
+      btn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        text.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
+      });
+    });
+  })();
+</script>
+</head>
+<body>
+  <div class="page">
+    <header class="grid-12 bar">
+      <a class="bar-name" href="#top">Marmik Soni</a>
+      
+      <nav class="bar-nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Drop me a line</a>
+      </nav>
+      
+      <button class="bar-theme" aria-label="Toggle theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span class="theme-text">Light</span>
+      </button>
+    </header>
+
+    <main class="grid-12 hero" id="top">
+      <h1 class="hero-title">
+        <span>Web</span>
+        <span>Designer</span>
+        <span>&amp; Developer</span>
+      </h1>
+      <p class="hero-lede">
+        specialized in building websites for founders and small businesses, taking each one from first sketch to launch.
+      </p>
+    </main>
+  </div>
+</body>
+</html>
