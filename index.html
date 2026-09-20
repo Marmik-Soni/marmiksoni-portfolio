@@ -8,9 +8,17 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/style.css">
 <style>
+  /* Trap Font — Self-hosted */
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Light.otf') format('opentype'); font-weight: 300; font-display: swap; }
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-ExtraBold.otf') format('opentype'); font-weight: 800; font-display: swap; }
+  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Black.otf') format('opentype'); font-weight: 900; font-display: swap; }
   /* Base Configuration - Using the Bezier DNA */
   :root {
-    --font:   'Geist Sans', sans-serif; /* Vercel's Geist font */
+    --font: 'Trap', 'Geist Sans', sans-serif; /* Trap by Aayush Mayank */
     --canvas: #F4F4F3;
     --ink: #0f0f0f;
     --soft: #777777;
@@ -47,7 +55,7 @@
   body {
     background: var(--canvas);
     color: var(--ink);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
     font-size: var(--small);
     line-height: 1.5;
@@ -157,14 +165,151 @@
     text-align: right; /* Explicitly right-align the paragraph globally */
   }
 
+  /* --- Editorial Section --- */
+  .editorial {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    padding-top: calc(var(--m) * 4);
+    padding-bottom: calc(var(--m) * 5);
+    align-items: stretch; 
+  }
+
+  .editorial-text {
+    grid-column: 8 / 13; 
+    display: flex;
+    flex-direction: column;
+    padding-top: 8px;
+    gap: 20px;
+  }
+
+  .editorial-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+
+  .editorial-lead {
+    font-family: 'Trap', sans-serif;
+    font-size: clamp(22px, 2vw, 32px);
+    line-height: 1.15;
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .editorial-sub {
+    font-size: 15px;
+    line-height: 1.65;
+    font-weight: 400;
+    color: var(--soft);
+    margin: 0;
+  }
+
+  .editorial-divider {
+    display: none;
+  }
+
+  .editorial-link {
+    padding-top: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s;
+  }
+  
+  .editorial-link:hover {
+    opacity: 0.5;
+  }
+  
+  .editorial-link svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .editorial-image {
+    grid-column: 1 / 7; 
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+
+  .editorial-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(100%) contrast(1.1);
+    will-change: transform;
+    transform: translateY(-15%);
+  }
+
+  /* --- Services Section --- */
+  .services-heading {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 0 0 calc(var(--m) * 1) 0;
+    line-height: 1;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+  }
+
+  .service-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .service-num {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--soft);
+    letter-spacing: 0.08em;
+  }
+
+  .service-title {
+    font-size: clamp(20px, 1.8vw, 28px);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .service-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--soft);
+    margin: 0;
+  }
+
   /* Responsive fixes for mobile */
   @media (max-width: 1024px) {
     .bar-nav { display: none; } 
     .bar-name { grid-column: 1 / 6; }
     
-    /* Keep the strict 12-column grid to maintain character */
     .hero {
-      padding-top: 15vh; /* Locks it to the top */
+      padding-top: 15vh;
       align-content: start;
     }
 
@@ -179,13 +324,39 @@
 
     .hero-lede {
       grid-area: auto;
-      grid-column: 4 / 13; /* Pushes the entire block to the right using the strict grid */
-      margin-top: 40px; /* Precise, tight lock-up */
+      grid-column: 4 / 13;
+      margin-top: 40px;
       margin-bottom: 0;
       max-width: 100%;
       font-size: 15px; 
       line-height: 1.5;
-      text-align: right; /* User strictly prefers the right-aligned ragged left edge */
+      text-align: right; 
+    }
+
+    .editorial {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding-top: calc(var(--m) * 2);
+    }
+
+    .editorial-lead {
+      font-size: clamp(28px, 7vw, 36px);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .editorial-sub {
+      max-width: 100%;
+    }
+
+    .editorial-link {
+      margin-top: 32px;
+    }
+
+    .service-card {
+      grid-column: 1 / -1;
+      padding-left: 24px;
     }
   }
 </style>
@@ -247,6 +418,36 @@
         document.documentElement.setAttribute('data-theme', newTheme);
         text.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
       });
+
+      // Editorial Parallax Effect
+      const parallaxImages = document.querySelectorAll('.editorial-image img');
+      let tickingParallax = false;
+
+      function updateParallax() {
+        parallaxImages.forEach(img => {
+          const rect = img.parentElement.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          
+          // Check if in viewport
+          if (rect.top <= windowHeight && rect.bottom >= 0) {
+            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            // Move from -15% to 0% as it scrolls up
+            const y = -15 + (progress * 15);
+            img.style.transform = `translateY(${y}%)`;
+          }
+        });
+        tickingParallax = false;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!tickingParallax) {
+          window.requestAnimationFrame(updateParallax);
+          tickingParallax = true;
+        }
+      }, { passive: true });
+      
+      // Initial trigger
+      updateParallax();
     });
   })();
 </script>
@@ -286,9 +487,53 @@
         <span>&amp; Developer</span>
       </h1>
       <p class="hero-lede">
-        specialized in building websites for founders and small businesses, taking each one from first sketch to launch.
+        Web Designer & Developer designing digital products end-to-end, helping build experiences that work for both users and business goals.
       </p>
     </main>
+
+    <section class="editorial" id="about">
+      <div class="editorial-image">
+        <img src="portrait.jpg" alt="Editorial Portrait">
+      </div>
+      <div class="editorial-text">
+        <span class="editorial-label">About me</span>
+        <p class="editorial-lead">Passionate about web technologies. I love working at the intersection of creativity and user friendly interfaces. I create memorable web experiences.</p>
+        <p class="editorial-sub">When I'm not building or exploring new web experiences, I'm probably playing games or watching football.</p>
+        <div class="editorial-divider"></div>
+        <a href="#contact" class="editorial-link">
+          Get in touch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="services" id="work">
+      <h2 class="services-heading">Here's what I bring to the table.</h2>
+      
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-num">01</span>
+          <h3 class="service-title">Design</h3>
+          <p class="service-desc">Pixel-perfect interfaces built around your users, your brand, and your goals.</p>
+        </div>
+        
+        <div class="service-card">
+          <span class="service-num">02</span>
+          <h3 class="service-title">Development</h3>
+          <p class="service-desc">Clean, performant code that brings every detail of your design to life.</p>
+        </div>
+        
+        <div class="service-card">
+          <span class="service-num">03</span>
+          <h3 class="service-title">The Full Package</h3>
+          <p class="service-desc">End-to-end — from the first sketch to a live, polished, launch-ready website.</p>
+        </div>
+      </div>
+    </section>
+
   </div>
 </body>
 </html>
