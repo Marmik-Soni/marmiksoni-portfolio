@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Marmik Soni – Digital Designer</title>
-<meta name="description" content="Marmik Soni designs and builds websites for founders and small businesses.">
+<meta name="description" content="Designing modern and engaging digital experiences for brands and businesses">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/style.css">
 <style>
@@ -257,50 +257,120 @@
     transform: translateY(-15%);
   }
 
-  /* --- Services Section --- */
-  .services-heading {
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-    margin: 0 0 calc(var(--m) * 1) 0;
-    line-height: 1;
-  }
-
-  .services-grid {
+  /* --- Services Section (Typographic Spotlight) --- */
+  .services {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: var(--gap);
+    align-items: start;
+    position: relative;
+    padding-top: calc(var(--m) * 2);
+    padding-bottom: calc(var(--m) * 2);
   }
 
-  .service-card {
-    grid-column: span 4;
+  .services-content {
+    grid-column: 1 / 8;
+  }
+
+  .services-heading {
+    font-size: clamp(24px, 2vw, 32px);
+    font-weight: 500;
+    color: var(--soft);
+    margin: 0 0 calc(var(--m) * 2) 0;
+  }
+
+  .services-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: calc(var(--m) * 0.5);
+  }
+
+  .service-item {
+    display: flex;
+    align-items: baseline;
+    gap: calc(var(--m) * 0.5);
+    cursor: default;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Dim non-hovered siblings */
+  .services-list:has(.service-item:hover) .service-item:not(:hover) {
+    opacity: 0.25;
   }
 
   .service-num {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--soft);
-    letter-spacing: 0.08em;
+    min-width: 2ch;
   }
 
   .service-title {
-    font-size: clamp(20px, 1.8vw, 28px);
-    font-weight: 600;
+    font-size: clamp(32px, 5.5vw, 84px);
+    font-weight: 500;
     color: var(--ink);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     margin: 0;
-    line-height: 1.1;
+    line-height: 1;
+    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+  }
+  
+  .service-item:hover .service-title {
+    transform: translateX(12px);
   }
 
-  .service-desc {
-    font-size: 16px;
-    line-height: 1.6;
+  .services-preview {
+    grid-column: 8 / 13;
+    position: sticky;
+    top: calc(var(--m) * 2); /* Sticky position */
+    aspect-ratio: 4/5;
+  }
+
+  .preview-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--m) * 0.75);
+  }
+
+  .preview-item.is-active {
+    opacity: 1;
+  }
+
+  .preview-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    clip-path: inset(0% 0% 100% 0%);
+    transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+  }
+
+  .preview-item.is-active .preview-image {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+
+  .preview-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .preview-desc {
+    font-size: clamp(14px, 1.3vw, 17px);
+    line-height: 1.65;
     color: var(--soft);
     margin: 0;
+    max-width: 48ch;
   }
 
   /* Responsive fixes for mobile */
@@ -354,10 +424,32 @@
       margin-top: 32px;
     }
 
-    .service-card {
-      grid-column: 1 / -1;
-      padding-left: 24px;
+    /* Mobile Services Layout */
+    .services {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
     }
+    .services-preview {
+      order: -1;
+      position: relative;
+      top: 0;
+      width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+      min-height: 300px;
+    }
+    .service-item:hover .service-title {
+      transform: none; /* Disable shift on mobile touch */
+    }
+    .services-list:has(.service-item:hover) .service-item:not(:hover) {
+      opacity: 1; /* Disable dimming on mobile touch */
+    }
+  }
+
+  /* ── Bottom breathing space ───────────────────────────────── */
+  .bottom-space {
+    height: clamp(240px, 40vh, 480px);
   }
 </style>
 <script>
@@ -511,28 +603,102 @@
     </section>
 
     <section class="services" id="work">
-      <h2 class="services-heading">Here's what I bring to the table.</h2>
-      
-      <div class="services-grid">
-        <div class="service-card">
-          <span class="service-num">01</span>
-          <h3 class="service-title">Design</h3>
-          <p class="service-desc">Pixel-perfect interfaces built around your users, your brand, and your goals.</p>
+      <div class="services-content">
+        <h2 class="services-heading">Here's what I bring to the table.</h2>
+
+        <ul class="services-list" id="services-list">
+          <li class="service-item" data-index="0">
+            <span class="service-num">01</span>
+            <h3 class="service-title">Design</h3>
+          </li>
+          <li class="service-item" data-index="1">
+            <span class="service-num">02</span>
+            <h3 class="service-title">Development</h3>
+          </li>
+          <li class="service-item" data-index="2">
+            <span class="service-num">03</span>
+            <h3 class="service-title">Motion &amp; Animation</h3>
+          </li>
+          <li class="service-item" data-index="3">
+            <span class="service-num">04</span>
+            <h3 class="service-title">Strategy</h3>
+          </li>
+          <li class="service-item" data-index="4">
+            <span class="service-num">05</span>
+            <h3 class="service-title">The Full Package</h3>
+          </li>
+        </ul>
+      </div>
+
+      <div class="services-preview" id="services-preview">
+        <div class="preview-item">
+          <div class="preview-image">
+            <img src="service-design.jpg" alt="Design">
+          </div>
+          <p class="preview-desc">Pixel-perfect interfaces built around your users, your brand, and your goals. Every pixel has a reason &mdash; every layout a purpose.</p>
         </div>
         
-        <div class="service-card">
-          <span class="service-num">02</span>
-          <h3 class="service-title">Development</h3>
-          <p class="service-desc">Clean, performant code that brings every detail of your design to life.</p>
+        <div class="preview-item">
+          <div class="preview-image">
+            <img src="service-dev.jpg" alt="Development">
+          </div>
+          <p class="preview-desc">Clean, performant code that brings every detail of your design to life. Fast, accessible, and built to last.</p>
         </div>
-        
-        <div class="service-card">
-          <span class="service-num">03</span>
-          <h3 class="service-title">The Full Package</h3>
-          <p class="service-desc">End-to-end — from the first sketch to a live, polished, launch-ready website.</p>
+
+        <div class="preview-item">
+          <div class="preview-image">
+            <img src="service-motion.jpg" alt="Motion and Animation">
+          </div>
+          <p class="preview-desc">Meaningful motion that brings interfaces to life. From subtle micro-interactions to scroll-driven sequences &mdash; every transition is intentional.</p>
+        </div>
+
+        <div class="preview-item">
+          <div class="preview-image">
+            <img src="service-strategy.jpg" alt="Strategy">
+          </div>
+          <p class="preview-desc">Great design is only effective with the right direction. I help define user journeys, information architecture, and conversion paths that turn visitors into believers.</p>
+        </div>
+
+        <div class="preview-item">
+          <div class="preview-image">
+            <img src="service-package.jpg" alt="The Full Package">
+          </div>
+          <p class="preview-desc">End-to-end &mdash; from the first sketch to a live, polished, launch-ready website. One person who thinks in both design and code.</p>
         </div>
       </div>
     </section>
+
+    <script>
+      (function () {
+        var listItems = Array.from(document.querySelectorAll('#services-list .service-item'));
+        var previews = Array.from(document.querySelectorAll('#services-preview .preview-item'));
+        var listContainer = document.getElementById('services-list');
+
+        if (!listItems.length || !previews.length) return;
+
+        listItems.forEach(function (item) {
+          item.addEventListener('mouseenter', function () {
+            var index = item.getAttribute('data-index');
+            
+            // Remove active from all previews
+            previews.forEach(function (p) { p.classList.remove('is-active'); });
+            
+            // Add active to current preview
+            if (previews[index]) {
+              previews[index].classList.add('is-active');
+            }
+          });
+        });
+
+        // On mouse-leave of the list container, we remove all active states
+        listContainer.addEventListener('mouseleave', function () {
+          previews.forEach(function (p) { p.classList.remove('is-active'); });
+        });
+      })();
+    </script>
+
+    <!-- Inspirational breathing space -->
+    <div class="bottom-space"></div>
 
   </div>
 </body>
