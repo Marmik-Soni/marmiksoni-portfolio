@@ -84,17 +84,32 @@
     gsap.set('.hero-title .word-wrap span', { y: '110%' });
     gsap.set('.hero-lede',              { opacity: 0, y: 28 });
 
+    // Random staging targets — different every visit
+    var mid1 = 22 + Math.floor(Math.random() * 10);        // 22 – 31
+    var mid2 = mid1 + 26 + Math.floor(Math.random() * 18); // mid1+26 – mid1+43, capped
+    mid2     = Math.min(mid2, 74);
+
+    function tick() { countEl.textContent = Math.round(counter.val) + '%'; }
+
     var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // 1. Count 0 → 100
-    tl.to(counter, {
-      val: 100,
-      duration: 1.1,
-      ease: 'power2.inOut',
-      onUpdate: function () {
-        countEl.textContent = Math.round(counter.val) + '%';
-      }
-    });
+    // Stage 1: 0 → 1  (instant flash to show it's alive)
+    tl.to(counter, { val: 1,    duration: 0.12, ease: 'none',         onUpdate: tick });
+
+    // Stage 2: 1 → mid1  (quick first rush)
+    tl.to(counter, { val: mid1, duration: 0.55, ease: 'power2.out',   onUpdate: tick });
+
+    // Pause — hangs like real loading
+    tl.to(counter, { val: mid1, duration: 0.55 });
+
+    // Stage 3: mid1 → mid2  (second surge)
+    tl.to(counter, { val: mid2, duration: 0.65, ease: 'power1.inOut', onUpdate: tick });
+
+    // Pause — almost there tension
+    tl.to(counter, { val: mid2, duration: 0.4 });
+
+    // Stage 4: mid2 → 100  (final push)
+    tl.to(counter, { val: 100,  duration: 0.7,  ease: 'power2.inOut', onUpdate: tick });
 
     // 2. Hold briefly, then counter exits
     tl.to(countEl, {
@@ -139,10 +154,15 @@
     var btn  = document.querySelector('.bar-theme');
     var text = btn.querySelector('.theme-text');
 
+    // Sync button label to whatever theme was restored from localStorage
+    var initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    text.textContent = initialTheme.charAt(0).toUpperCase() + initialTheme.slice(1);
+
     btn.addEventListener('click', function () {
       var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
       var newTheme = currentTheme === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
       text.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
     });
 
