@@ -5,6 +5,12 @@
 (function () {
   'use strict';
 
+  /* ── GSAP Setup ────────────────────────────────────────────
+     ScrollTrigger is registered here once so all animations
+     across the file can use it without repeating the call.
+  ──────────────────────────────────────────────────────────── */
+  gsap.registerPlugin(ScrollTrigger);
+
   /* ── Bezier-based Fluid Scaling ────────────────────────────
      Maps --p from 0 (≤1024px) to 1 (≥2560px) using a custom
      cubic-bezier curve for non-linear, natural scaling.
