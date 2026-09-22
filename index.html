@@ -7,542 +7,8 @@
 <meta name="description" content="Designing modern and engaging digital experiences for brands and businesses">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/style.css">
-<style>
-  /* Trap Font — Self-hosted */
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Light.otf') format('opentype'); font-weight: 300; font-display: swap; }
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-ExtraBold.otf') format('opentype'); font-weight: 800; font-display: swap; }
-  @font-face { font-family: 'Trap'; src: url('fonts/Trap-Black.otf') format('opentype'); font-weight: 900; font-display: swap; }
-  /* Base Configuration - Using the Bezier DNA */
-  :root {
-    --font: 'Trap', 'Geist Sans', sans-serif; /* Trap by Aayush Mayank */
-    --canvas: #F4F4F3;
-    --ink: #0f0f0f;
-    --soft: #777777;
-    --line: rgba(17, 17, 17, 0.1);
-    color-scheme: light;
-
-    /* Base scale mapped by JS (p=0 below 1024px, p=1 at 2560px) */
-    --p: 0.6;
-
-    /* Margins and Layout */
-    --m:      calc(24px + (80px - 24px) * var(--p));   /* page margin */
-    --gap:    calc(16px + (32px - 16px) * var(--p));   /* grid gutter */
-    --small:  calc(14px + (16px - 14px) * var(--p));   /* small text (nav, subtext) */
-
-    /* Huge Hero Typography */
-    /* Integrated clamp() into the base so mobile fluidly scales down before the Bezier curve takes over at 1024px */
-    --title:  min(calc(clamp(32px, 10vw, 120px) + (300px - clamp(32px, 10vw, 120px)) * var(--p)), 28svh);
-    --lh:     calc(0.92 + (0.86 - 0.92) * var(--p));    /* Exceedingly tight line height for massive text */
-    --track:  calc((-0.045 - 0.02 * var(--p)) * 1em);   /* Tighter kerning to match desktop density on mobile */
-    --wght:   500;                                      /* Slightly bolder for Inter to match Dimov's weight */
-  }
-
-  [data-theme="dark"] {
-    --canvas: #121212;
-    --ink: #F4F4F3;
-    --soft: #A0A0A0;
-    --line: rgba(244, 244, 243, 0.15);
-    color-scheme: dark;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-text-size-adjust: 100%; }
-
-  body {
-    background: var(--canvas);
-    color: var(--ink);
-    font-family: var(--font), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    font-size: var(--small);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    transition: background-color 0.4s ease, color 0.4s ease;
-  }
-
-  a { color: inherit; text-decoration: none; }
-  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
-
-  /* Grid Layout Architecture */
-  .page {
-    min-width: 320px;
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    padding: 0 var(--m);
-  }
-
-  .grid-12 {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--gap);
-  }
-
-  /* --- Navigation Bar --- */
-  .bar {
-    align-items: center;
-    padding-top: calc(var(--m) * 0.8);
-    margin-bottom: calc(var(--m) * 2);
-  }
-
-  .bar-name {
-    grid-column: 1 / 4;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-  }
-
-  .bar-nav {
-    grid-column: 4 / 10;
-    display: flex;
-    justify-content: center;
-    gap: calc(24px + (48px - 24px) * var(--p));
-    font-weight: 500;
-  }
-
-  .bar-theme {
-    grid-column: 10 / 13;
-    justify-self: end;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: 500;
-  }
-
-  .bar-nav a, .bar-name, .bar-theme {
-    transition: opacity 0.25s ease;
-  }
-  .bar-nav a:hover, .bar-name:hover, .bar-theme:hover { opacity: 0.5; }
-
-  /* --- Hero Section --- */
-  .hero {
-    flex: 1;
-    align-content: flex-start; /* Fallback for older Android engines */
-    align-content: start; /* Pushes the massive text up towards the top */
-    padding-top: 15vh; /* Consistent breathing room from the top nav */
-    padding-bottom: var(--m);
-    position: relative;
-    /* Bulletproof top-alignment for older browsers that fail to parse align-content on grids */
-    grid-template-rows: auto auto 1fr;
-  }
-
-  .hero-title {
-    grid-area: 1 / 1 / 2 / -1;
-    font-size: var(--title);
-    font-weight: var(--wght);
-    line-height: var(--lh);
-    letter-spacing: var(--track);
-    /* Optical alignment for letter 'W' in Web */
-    margin-left: -0.05em; 
-  }
-
-  .hero-title span {
-    display: block;
-    white-space: nowrap;
-  }
-
-  .hero-lede {
-    /* Aligned precisely in Dimov's style: pushed right to accommodate the stacked '& Developer' string */
-    grid-area: 1 / 10 / 2 / 13;
-    align-self: end;
-    max-width: 32ch;
-    /* This calculation uses the Bezier properties to perfectly align the bottom baseline of the small text with the bottom baseline of the giant text, regardless of screen size. */
-    margin-bottom: calc(var(--title) * (var(--lh) * 0.5 - 0.35) - 0.4em);
-    margin-top: 0;
-    color: var(--ink);
-    font-weight: 400;
-    text-align: right; /* Explicitly right-align the paragraph globally */
-  }
-
-  /* --- Editorial Section --- */
-  .editorial {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--gap);
-    padding-top: calc(var(--m) * 4);
-    padding-bottom: calc(var(--m) * 5);
-    align-items: stretch; 
-  }
-
-  .editorial-text {
-    grid-column: 8 / 13; 
-    display: flex;
-    flex-direction: column;
-    padding-top: 8px;
-    gap: 20px;
-  }
-
-  .editorial-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--soft);
-  }
-
-  .editorial-lead {
-    font-family: 'Trap', sans-serif;
-    font-size: clamp(22px, 2vw, 32px);
-    line-height: 1.15;
-    font-weight: 500;
-    font-style: normal;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    margin: 0;
-  }
-
-  .editorial-sub {
-    font-size: 15px;
-    line-height: 1.65;
-    font-weight: 400;
-    color: var(--soft);
-    margin: 0;
-  }
-
-  .editorial-divider {
-    display: none;
-  }
-
-  .editorial-link {
-    padding-top: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: opacity 0.2s;
-  }
-  
-  .editorial-link:hover {
-    opacity: 0.5;
-  }
-  
-  .editorial-link svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .editorial-image {
-    grid-column: 1 / 7; 
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-  }
-
-  .editorial-image img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 120%;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(100%) contrast(1.1);
-    will-change: transform;
-    transform: translateY(-15%);
-  }
-
-  /* --- Services Section (Typographic Spotlight) --- */
-  .services {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--gap);
-    align-items: start;
-    position: relative;
-    padding-top: calc(var(--m) * 2);
-    padding-bottom: calc(var(--m) * 2);
-  }
-
-  .services-content {
-    grid-column: 1 / 8;
-  }
-
-  .services-heading {
-    font-size: clamp(24px, 2vw, 32px);
-    font-weight: 500;
-    color: var(--soft);
-    margin: 0 0 calc(var(--m) * 2) 0;
-  }
-
-  .services-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--m) * 0.5);
-  }
-
-  .service-item {
-    display: flex;
-    align-items: baseline;
-    gap: calc(var(--m) * 0.5);
-    cursor: default;
-    transition: opacity 0.4s ease;
-  }
-
-  /* Dim non-hovered siblings */
-  .services-list:has(.service-item:hover) .service-item:not(:hover) {
-    opacity: 0.25;
-  }
-
-  .service-num {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--soft);
-    min-width: 2ch;
-  }
-
-  .service-title {
-    font-size: clamp(32px, 5.5vw, 84px);
-    font-weight: 500;
-    color: var(--ink);
-    letter-spacing: -0.03em;
-    margin: 0;
-    line-height: 1;
-    transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
-  }
-  
-  .service-item:hover .service-title {
-    transform: translateX(12px);
-  }
-
-  .services-preview {
-    grid-column: 8 / 13;
-    position: sticky;
-    top: calc(var(--m) * 2); /* Sticky position */
-    aspect-ratio: 4/5;
-  }
-
-  .preview-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--m) * 0.75);
-  }
-
-  .preview-item.is-active {
-    opacity: 1;
-  }
-
-  .preview-image {
-    width: 100%;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    clip-path: inset(0% 0% 100% 0%);
-    transition: clip-path 0.8s cubic-bezier(0.7, 0, 0.3, 1);
-  }
-
-  .preview-item.is-active .preview-image {
-    clip-path: inset(0% 0% 0% 0%);
-  }
-
-  .preview-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .preview-desc {
-    font-size: clamp(14px, 1.3vw, 17px);
-    line-height: 1.65;
-    color: var(--soft);
-    margin: 0;
-    max-width: 48ch;
-  }
-
-  /* Responsive fixes for mobile */
-  @media (max-width: 1024px) {
-    .bar-nav { display: none; } 
-    .bar-name { grid-column: 1 / 6; }
-    
-    .hero {
-      padding-top: 15vh;
-      align-content: start;
-    }
-
-    .hero-title {
-      grid-area: auto;
-      grid-column: 1 / -1;
-      font-size: 15vw; 
-      line-height: 0.85; 
-      letter-spacing: -0.05em; 
-      margin-left: -0.05em; 
-    }
-
-    .hero-lede {
-      grid-area: auto;
-      grid-column: 4 / 13;
-      margin-top: 40px;
-      margin-bottom: 0;
-      max-width: 100%;
-      font-size: 15px; 
-      line-height: 1.5;
-      text-align: right; 
-    }
-
-    .editorial {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      padding-top: calc(var(--m) * 2);
-    }
-
-    .editorial-lead {
-      font-size: clamp(28px, 7vw, 36px);
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-
-    .editorial-sub {
-      max-width: 100%;
-    }
-
-    .editorial-link {
-      margin-top: 32px;
-    }
-
-    /* Mobile Services Layout */
-    .services {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-    .services-preview {
-      order: -1;
-      position: relative;
-      top: 0;
-      width: 100%;
-      height: auto;
-      aspect-ratio: auto;
-      min-height: 300px;
-    }
-    .service-item:hover .service-title {
-      transform: none; /* Disable shift on mobile touch */
-    }
-    .services-list:has(.service-item:hover) .service-item:not(:hover) {
-      opacity: 1; /* Disable dimming on mobile touch */
-    }
-  }
-
-  /* ── Bottom breathing space ───────────────────────────────── */
-  .bottom-space {
-    height: clamp(240px, 40vh, 480px);
-  }
-</style>
-<script>
-  /* The DNA Bezier Easing */
-  (function () {
-    var MIN_W = 1024, MAX_W = 2560;
-    var X1 = 0.35, Y1 = 0.15, X2 = 0.65, Y2 = 0.85;
-
-    function bez(t, a, b) {
-      var u = 1 - t; return 3 * u * u * t * a + 3 * u * t * t * b + t * t * t;
-    }
-    function bezSlope(t, a, b) {
-      var u = 1 - t; return 3 * u * u * a + 6 * u * t * (b - a) + 3 * t * t * (1 - b);
-    }
-
-    function ease(x) {
-      if (x <= 0) return 0;
-      if (x >= 1) return 1;
-      var t = x, i;
-      for (i = 0; i < 8; i++) {
-        var err = bez(t, X1, X2) - x;
-        if (Math.abs(err) < 1e-6) break;
-        var s = bezSlope(t, X1, X2);
-        if (Math.abs(s) < 1e-6) break;
-        t -= err / s;
-      }
-      if (!(t >= 0 && t <= 1) || Math.abs(bez(t, X1, X2) - x) > 1e-4) {
-        var lo = 0, hi = 1; t = x;
-        for (i = 0; i < 30; i++) {
-          if (bez(t, X1, X2) < x) lo = t; else hi = t;
-          t = (lo + hi) / 2;
-        }
-      }
-      return bez(t, Y1, Y2);
-    }
-
-    var root = document.documentElement, frame;
-    function update() {
-      var w = root.clientWidth || window.innerWidth;
-      var p = ease((w - MIN_W) / (MAX_W - MIN_W));
-      root.style.setProperty("--p", p.toFixed(4));
-    }
-
-    update();
-    window.addEventListener("resize", function () {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(update);
-    });
-
-    // Theme toggler
-    window.addEventListener("DOMContentLoaded", function() {
-      const btn = document.querySelector('.bar-theme');
-      const text = btn.querySelector('.theme-text');
-      
-      btn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        text.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
-      });
-
-      // Editorial Parallax Effect
-      const parallaxImages = document.querySelectorAll('.editorial-image img');
-      let tickingParallax = false;
-
-      function updateParallax() {
-        parallaxImages.forEach(img => {
-          const rect = img.parentElement.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          
-          // Check if in viewport
-          if (rect.top <= windowHeight && rect.bottom >= 0) {
-            const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-            // Move from -15% to 0% as it scrolls up
-            const y = -15 + (progress * 15);
-            img.style.transform = `translateY(${y}%)`;
-          }
-        });
-        tickingParallax = false;
-      }
-
-      window.addEventListener('scroll', () => {
-        if (!tickingParallax) {
-          window.requestAnimationFrame(updateParallax);
-          tickingParallax = true;
-        }
-      }, { passive: true });
-      
-      // Initial trigger
-      updateParallax();
-    });
-  })();
-</script>
+<link rel="stylesheet" href="style.css">
+<script src="main.js" defer></script>
 </head>
 <body>
   <div class="page">
@@ -608,24 +74,74 @@
 
         <ul class="services-list" id="services-list">
           <li class="service-item" data-index="0">
-            <span class="service-num">01</span>
-            <h3 class="service-title">Design</h3>
+            <div class="service-item-header">
+              <span class="service-num">01</span>
+              <h3 class="service-title">Design</h3>
+            </div>
+            <div class="mobile-preview">
+              <div class="mobile-preview-inner">
+                <div class="preview-image">
+                  <img src="service-design.jpg" alt="Design">
+                </div>
+                <p class="preview-desc">Pixel-perfect interfaces built around your users, your brand, and your goals. Every pixel has a reason &mdash; every layout a purpose.</p>
+              </div>
+            </div>
           </li>
           <li class="service-item" data-index="1">
-            <span class="service-num">02</span>
-            <h3 class="service-title">Development</h3>
+            <div class="service-item-header">
+              <span class="service-num">02</span>
+              <h3 class="service-title">Development</h3>
+            </div>
+            <div class="mobile-preview">
+              <div class="mobile-preview-inner">
+                <div class="preview-image">
+                  <img src="service-dev.jpg" alt="Development">
+                </div>
+                <p class="preview-desc">Clean, performant code that brings every detail of your design to life. Fast, accessible, and built to last.</p>
+              </div>
+            </div>
           </li>
           <li class="service-item" data-index="2">
-            <span class="service-num">03</span>
-            <h3 class="service-title">Motion &amp; Animation</h3>
+            <div class="service-item-header">
+              <span class="service-num">03</span>
+              <h3 class="service-title">Motion &amp; Animation</h3>
+            </div>
+            <div class="mobile-preview">
+              <div class="mobile-preview-inner">
+                <div class="preview-image">
+                  <img src="service-motion.jpg" alt="Motion and Animation">
+                </div>
+                <p class="preview-desc">Meaningful motion that brings interfaces to life. From subtle micro-interactions to scroll-driven sequences &mdash; every transition is intentional.</p>
+              </div>
+            </div>
           </li>
           <li class="service-item" data-index="3">
-            <span class="service-num">04</span>
-            <h3 class="service-title">Strategy</h3>
+            <div class="service-item-header">
+              <span class="service-num">04</span>
+              <h3 class="service-title">Strategy</h3>
+            </div>
+            <div class="mobile-preview">
+              <div class="mobile-preview-inner">
+                <div class="preview-image">
+                  <img src="service-strategy.jpg" alt="Strategy">
+                </div>
+                <p class="preview-desc">Great design is only effective with the right direction. I help define user journeys, information architecture, and conversion paths that turn visitors into believers.</p>
+              </div>
+            </div>
           </li>
           <li class="service-item" data-index="4">
-            <span class="service-num">05</span>
-            <h3 class="service-title">The Full Package</h3>
+            <div class="service-item-header">
+              <span class="service-num">05</span>
+              <h3 class="service-title">The Full Package</h3>
+            </div>
+            <div class="mobile-preview">
+              <div class="mobile-preview-inner">
+                <div class="preview-image">
+                  <img src="service-package.jpg" alt="The Full Package">
+                </div>
+                <p class="preview-desc">End-to-end &mdash; from the first sketch to a live, polished, launch-ready website. One person who thinks in both design and code.</p>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -667,35 +183,6 @@
         </div>
       </div>
     </section>
-
-    <script>
-      (function () {
-        var listItems = Array.from(document.querySelectorAll('#services-list .service-item'));
-        var previews = Array.from(document.querySelectorAll('#services-preview .preview-item'));
-        var listContainer = document.getElementById('services-list');
-
-        if (!listItems.length || !previews.length) return;
-
-        listItems.forEach(function (item) {
-          item.addEventListener('mouseenter', function () {
-            var index = item.getAttribute('data-index');
-            
-            // Remove active from all previews
-            previews.forEach(function (p) { p.classList.remove('is-active'); });
-            
-            // Add active to current preview
-            if (previews[index]) {
-              previews[index].classList.add('is-active');
-            }
-          });
-        });
-
-        // On mouse-leave of the list container, we remove all active states
-        listContainer.addEventListener('mouseleave', function () {
-          previews.forEach(function (p) { p.classList.remove('is-active'); });
-        });
-      })();
-    </script>
 
     <!-- Inspirational breathing space -->
     <div class="bottom-space"></div>
