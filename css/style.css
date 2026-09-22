@@ -43,6 +43,26 @@
   color-scheme: dark;
 }
 
+/* ── Loader ────────────────────────────────────────────────── */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+#loader-count {
+  font-family: var(--font);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+
 /* ── Reset ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
@@ -140,7 +160,15 @@ a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-rad
   margin-left: -0.05em;
 }
 
-.hero-title span {
+/* ── Word Mask (for GSAP stagger reveal) ───────────────────── */
+.word-wrap {
+  display: block;
+  overflow: hidden;
+  /* Matches hero line-height so the overflow clips cleanly */
+  line-height: calc(var(--lh) * 1em + 0.08em);
+}
+
+.hero-title .word-wrap span {
   display: block;
   white-space: nowrap;
 }

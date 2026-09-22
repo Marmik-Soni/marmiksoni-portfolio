@@ -64,11 +64,79 @@
     frame = requestAnimationFrame(update);
   });
 
-  /* ── DOMContentLoaded ──────────────────────────────────── */
+  /* ── Intro Timeline ────────────────────────────────────────
+     Sequence:
+       1. Counter 0 → 100%
+       2. Counter exits (fade up)
+       3. Loader wipes off screen (slide up)
+       4. Nav fades down
+       5. Hero words stagger up from mask
+       6. Lede drifts up and fades in
+  ──────────────────────────────────────────────────────────── */
   window.addEventListener('DOMContentLoaded', function () {
 
-    /* ── Theme Toggler ────────────────────────────────────── */
-    var btn = document.querySelector('.bar-theme');
+    var loaderEl  = document.getElementById('loader');
+    var countEl   = document.getElementById('loader-count');
+    var counter   = { val: 0 };
+
+    // Set starting states before loader exits (no flash)
+    gsap.set('.bar',                    { opacity: 0, y: -20 });
+    gsap.set('.hero-title .word-wrap span', { y: '110%' });
+    gsap.set('.hero-lede',              { opacity: 0, y: 28 });
+
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    // 1. Count 0 → 100
+    tl.to(counter, {
+      val: 100,
+      duration: 1.1,
+      ease: 'power2.inOut',
+      onUpdate: function () {
+        countEl.textContent = Math.round(counter.val) + '%';
+      }
+    });
+
+    // 2. Hold briefly, then counter exits
+    tl.to(countEl, {
+      opacity: 0,
+      y: -24,
+      duration: 0.3,
+      ease: 'power2.in'
+    }, '+=0.08');
+
+    // 3. Loader slides up and off
+    tl.to(loaderEl, {
+      yPercent: -100,
+      duration: 0.85,
+      ease: 'power3.inOut'
+    }, '-=0.05');
+
+    // 4. Nav drops in
+    tl.to('.bar', {
+      opacity: 1,
+      y: 0,
+      duration: 0.55,
+      ease: 'power2.out'
+    }, '-=0.45');
+
+    // 5. Hero words stagger up
+    tl.to('.hero-title .word-wrap span', {
+      y: '0%',
+      duration: 1.0,
+      ease: 'power3.out',
+      stagger: 0.08
+    }, '-=0.35');
+
+    // 6. Lede drifts in
+    tl.to('.hero-lede', {
+      opacity: 1,
+      y: 0,
+      duration: 0.75,
+      ease: 'power2.out'
+    }, '-=0.6');
+
+    /* ── Theme Toggler ──────────────────────────────────────── */
+    var btn  = document.querySelector('.bar-theme');
     var text = btn.querySelector('.theme-text');
 
     btn.addEventListener('click', function () {
@@ -78,13 +146,13 @@
       text.textContent = newTheme.charAt(0).toUpperCase() + newTheme.slice(1);
     });
 
-    /* ── Editorial Parallax ───────────────────────────────── */
-    var parallaxImages = document.querySelectorAll('.editorial-image img');
-    var tickingParallax = false;
+    /* ── Editorial Parallax ─────────────────────────────────── */
+    var parallaxImages   = document.querySelectorAll('.editorial-image img');
+    var tickingParallax  = false;
 
     function updateParallax() {
       parallaxImages.forEach(function (img) {
-        var rect = img.parentElement.getBoundingClientRect();
+        var rect         = img.parentElement.getBoundingClientRect();
         var windowHeight = window.innerHeight;
 
         if (rect.top <= windowHeight && rect.bottom >= 0) {
@@ -106,8 +174,8 @@
     updateParallax();
 
     /* ── Services: Typographic Spotlight ───────────────────── */
-    var listItems = Array.from(document.querySelectorAll('#services-list .service-item'));
-    var previews = Array.from(document.querySelectorAll('#services-preview .preview-item'));
+    var listItems     = Array.from(document.querySelectorAll('#services-list .service-item'));
+    var previews      = Array.from(document.querySelectorAll('#services-preview .preview-item'));
     var listContainer = document.getElementById('services-list');
 
     if (listItems.length && previews.length) {
