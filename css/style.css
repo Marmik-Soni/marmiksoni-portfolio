@@ -3,13 +3,13 @@
    ═══════════════════════════════════════════════════════════ */
 
 /* Trap Font — Self-hosted */
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-Light.otf') format('opentype'); font-weight: 300; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-ExtraBold.otf') format('opentype'); font-weight: 800; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('fonts/Trap-Black.otf') format('opentype'); font-weight: 900; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-Light.otf') format('opentype'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-ExtraBold.otf') format('opentype'); font-weight: 800; font-display: swap; }
+@font-face { font-family: 'Trap'; src: url('../fonts/Trap-Black.otf') format('opentype'); font-weight: 900; font-display: swap; }
 
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
