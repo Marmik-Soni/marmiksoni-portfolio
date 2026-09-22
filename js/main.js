@@ -84,55 +84,18 @@
     gsap.set('.hero-title .word-wrap span', { y: '110%' });
     gsap.set('.hero-lede',              { opacity: 0, y: 28 });
 
-    // Random staging targets — different every visit
-    var mid1 = 22 + Math.floor(Math.random() * 10);        // 22 – 31
-    var mid2 = mid1 + 26 + Math.floor(Math.random() * 18); // mid1+26 – mid1+43, capped
-    mid2     = Math.min(mid2, 74);
-
-    function tick() { countEl.textContent = Math.round(counter.val) + '%'; }
+    /* --- LOADER TEMPORARILY DISABLED FOR DEV --- */
+    if (loaderEl) loaderEl.style.display = 'none';
 
     var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Stage 1: 0 → 1  (instant flash to show it's alive)
-    tl.to(counter, { val: 1,    duration: 0.12, ease: 'none',         onUpdate: tick });
-
-    // Stage 2: 1 → mid1  (quick first rush)
-    tl.to(counter, { val: mid1, duration: 0.55, ease: 'power2.out',   onUpdate: tick });
-
-    // Pause — hangs like real loading
-    tl.to(counter, { val: mid1, duration: 0.55 });
-
-    // Stage 3: mid1 → mid2  (second surge)
-    tl.to(counter, { val: mid2, duration: 0.65, ease: 'power1.inOut', onUpdate: tick });
-
-    // Pause — almost there tension
-    tl.to(counter, { val: mid2, duration: 0.4 });
-
-    // Stage 4: mid2 → 100  (final push)
-    tl.to(counter, { val: 100,  duration: 0.7,  ease: 'power2.inOut', onUpdate: tick });
-
-    // 2. Hold briefly, then counter exits
-    tl.to(countEl, {
-      opacity: 0,
-      y: -24,
-      duration: 0.3,
-      ease: 'power2.in'
-    }, '+=0.08');
-
-    // 3. Loader slides up and off
-    tl.to(loaderEl, {
-      yPercent: -100,
-      duration: 0.85,
-      ease: 'power3.inOut'
-    }, '-=0.05');
-
-    // 4. Nav drops in
+    // 4. Nav drops in (Instantly now)
     tl.to('.bar', {
       opacity: 1,
       y: 0,
       duration: 0.55,
       ease: 'power2.out'
-    }, '-=0.45');
+    });
 
     // 5. Hero words stagger up
     tl.to('.hero-title .word-wrap span', {
