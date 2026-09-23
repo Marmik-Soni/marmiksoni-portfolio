@@ -84,7 +84,43 @@ header {
   gap:            4px;
 }
 
-.bar-name { font-size: var(--nav-size); font-weight: 500; }
+/* ── Name / LinkedIn Link ──────────────────────────────────── */
+.bar-name {
+  font-size:      var(--nav-size);
+  font-weight:    500;
+  display:        inline-flex;
+  align-items:    center;
+  gap:            0;
+  overflow:       hidden;
+  opacity:        1; /* override global a:hover */
+}
+
+.bar-name:hover { opacity: 1; }
+
+.bar-name-text {
+  display:    inline-block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-name-arrow {
+  display:    inline-block;
+  opacity:    0;
+  transform:  translateX(-6px) translateY(4px);
+  transition: opacity    0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform  0.4s  cubic-bezier(0.16, 1, 0.3, 1);
+  margin-left: 3px;
+  font-style: normal;
+}
+
+.bar-name:hover .bar-name-text {
+  transform: translateY(-1px);
+}
+
+.bar-name:hover .bar-name-arrow {
+  opacity:   1;
+  transform: translateX(0) translateY(-1px);
+}
+
 
 /* ── Main ──────────────────────────────────────────────────── */
 main {
