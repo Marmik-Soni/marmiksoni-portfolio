@@ -1,202 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marmik Soni – Digital Designer</title>
-<meta name="description" content="Designing modern and engaging digital experiences for brands and businesses">
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/style.css">
-<!-- Theme: apply saved preference before first paint to prevent flash -->
-<script>(function(){var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
-<link rel="stylesheet" href="css/style.css">
-<!-- GSAP & Plugins -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marmik Soni – Coming Soon</title>
+  <meta name="description" content="Designing modern and engaging digital experiences for brands and businesses.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Preload critical fonts to eliminate FOUT -->
+  <link rel="preload" href="fonts/Trap-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/Trap-Medium.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Page Loader -->
-  <div id="loader">
-    <span id="loader-count">0%</span>
-  </div>
 
-  <div class="page">
-    <header class="grid-12 bar">
-      <a class="bar-name" href="#top">Marmik Soni</a>
-      
-      <nav class="bar-nav" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#process">Process</a>
-        <a href="#contact">Drop me a line</a>
-      </nav>
-      
-      <button class="bar-theme" aria-label="Toggle theme">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <span class="theme-text">Light</span>
+  <header>
+    <div class="name-block">
+      <span class="contact-label">Designer &amp; Developer</span>
+      <span class="bar-name">Marmik Soni</span>
+    </div>
+    <div class="contact-block">
+      <span class="contact-label">Drop me a line</span>
+      <button class="email-button" onclick="copyEmail()" aria-label="Copy email address">
+        <span class="email-text">hello@marmiksoni.co</span>
       </button>
-    </header>
+    </div>
+  </header>
 
-    <main class="grid-12 hero" id="top">
-      <h1 class="hero-title">
-        <div class="word-wrap"><span>Web</span></div>
-        <div class="word-wrap"><span>Designer</span></div>
-        <div class="word-wrap"><span>&amp; Developer</span></div>
-      </h1>
-      <p class="hero-lede">
-        Web Designer &amp; Developer designing digital products end-to-end, helping build experiences that work for both users and business goals.
-      </p>
-    </main>
+  <main>
+    <h1>Coming Soon</h1>
+    <p>Currently cooking up a brand new web experience. Please stand by.</p>
+  </main>
 
-    <section class="editorial" id="about">
-      <div class="editorial-image">
-        <img src="images/portrait.jpg" alt="Editorial Portrait">
-      </div>
-      <div class="editorial-text">
-        <span class="editorial-label">About me</span>
-        <p class="editorial-lead">Passionate about web technologies. I love working at the intersection of creativity and user friendly interfaces. I create memorable web experiences.</p>
-        <p class="editorial-sub">When I'm not building or exploring new web experiences, I'm probably playing games or watching football.</p>
-        <div class="editorial-divider"></div>
-        <a href="#contact" class="editorial-link">
-          Get in touch
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
-        </a>
-      </div>
-    </section>
+  <footer>
+  </footer>
 
-    <section class="services" id="work">
-      <div class="services-content">
-        <h2 class="services-heading">Here's what I bring to the table.</h2>
+  <div class="toast" id="toast">Email copied to clipboard</div>
 
-        <ul class="services-list" id="services-list">
-          <li class="service-item" data-index="0">
-            <div class="service-item-header">
-              <span class="service-num">01</span>
-              <h3 class="service-title">Design</h3>
-            </div>
-            <div class="mobile-preview">
-              <div class="mobile-preview-inner">
-                <div class="preview-image">
-                  <img src="images/service-design.jpg" alt="Design">
-                </div>
-                <p class="preview-desc">Pixel-perfect interfaces built around your users, your brand, and your goals. Every pixel has a reason &mdash; every layout a purpose.</p>
-              </div>
-            </div>
-          </li>
-          <li class="service-item" data-index="1">
-            <div class="service-item-header">
-              <span class="service-num">02</span>
-              <h3 class="service-title">Development</h3>
-            </div>
-            <div class="mobile-preview">
-              <div class="mobile-preview-inner">
-                <div class="preview-image">
-                  <img src="images/service-dev.jpg" alt="Development">
-                </div>
-                <p class="preview-desc">Clean, performant code that brings every detail of your design to life. Fast, accessible, and built to last.</p>
-              </div>
-            </div>
-          </li>
-          <li class="service-item" data-index="2">
-            <div class="service-item-header">
-              <span class="service-num">03</span>
-              <h3 class="service-title">Motion &amp; Animation</h3>
-            </div>
-            <div class="mobile-preview">
-              <div class="mobile-preview-inner">
-                <div class="preview-image">
-                  <img src="images/service-motion.jpg" alt="Motion and Animation">
-                </div>
-                <p class="preview-desc">Meaningful motion that brings interfaces to life. From subtle micro-interactions to scroll-driven sequences &mdash; every transition is intentional.</p>
-              </div>
-            </div>
-          </li>
-          <li class="service-item" data-index="3">
-            <div class="service-item-header">
-              <span class="service-num">04</span>
-              <h3 class="service-title">Strategy</h3>
-            </div>
-            <div class="mobile-preview">
-              <div class="mobile-preview-inner">
-                <div class="preview-image">
-                  <img src="images/service-strategy.jpg" alt="Strategy">
-                </div>
-                <p class="preview-desc">Great design is only effective with the right direction. I help define user journeys, information architecture, and conversion paths that turn visitors into believers.</p>
-              </div>
-            </div>
-          </li>
-          <li class="service-item" data-index="4">
-            <div class="service-item-header">
-              <span class="service-num">05</span>
-              <h3 class="service-title">The Full Package</h3>
-            </div>
-            <div class="mobile-preview">
-              <div class="mobile-preview-inner">
-                <div class="preview-image">
-                  <img src="images/service-package.jpg" alt="The Full Package">
-                </div>
-                <p class="preview-desc">End-to-end &mdash; from the first sketch to a live, polished, launch-ready website. One person who thinks in both design and code.</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+  <script>
+    function copyEmail() {
+      var email = 'hello@marmiksoni.co';
 
-      <div class="services-preview" id="services-preview">
-        <div class="preview-item">
-          <div class="preview-image">
-            <img src="images/service-design.jpg" alt="Design">
-          </div>
-          <p class="preview-desc">Pixel-perfect interfaces built around your users, your brand, and your goals. Every pixel has a reason &mdash; every layout a purpose.</p>
-        </div>
-        
-        <div class="preview-item">
-          <div class="preview-image">
-            <img src="images/service-dev.jpg" alt="Development">
-          </div>
-          <p class="preview-desc">Clean, performant code that brings every detail of your design to life. Fast, accessible, and built to last.</p>
-        </div>
+      var showToast = function () {
+        var toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2500);
+      };
 
-        <div class="preview-item">
-          <div class="preview-image">
-            <img src="images/service-motion.jpg" alt="Motion and Animation">
-          </div>
-          <p class="preview-desc">Meaningful motion that brings interfaces to life. From subtle micro-interactions to scroll-driven sequences &mdash; every transition is intentional.</p>
-        </div>
+      // Fallback for HTTP / Mobile Safari
+      if (!navigator.clipboard || window.isSecureContext === false) {
+        var textArea = document.createElement('textarea');
+        textArea.value = email;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          showToast();
+        } catch (err) {
+          console.error('Fallback copy failed', err);
+        }
+        document.body.removeChild(textArea);
+        return;
+      }
 
-        <div class="preview-item">
-          <div class="preview-image">
-            <img src="images/service-strategy.jpg" alt="Strategy">
-          </div>
-          <p class="preview-desc">Great design is only effective with the right direction. I help define user journeys, information architecture, and conversion paths that turn visitors into believers.</p>
-        </div>
+      // Modern HTTPS
+      navigator.clipboard.writeText(email).then(function () {
+        showToast();
+      }).catch(function (err) {
+        console.error('Clipboard copy failed', err);
+      });
+    }
+  </script>
 
-        <div class="preview-item">
-          <div class="preview-image">
-            <img src="images/service-package.jpg" alt="The Full Package">
-          </div>
-          <p class="preview-desc">End-to-end &mdash; from the first sketch to a live, polished, launch-ready website. One person who thinks in both design and code.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Inspirational breathing space -->
-    <div class="bottom-space"></div>
-
-  </div>
 </body>
 </html>
