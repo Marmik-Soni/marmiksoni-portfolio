@@ -84,47 +84,30 @@ header {
   gap:            4px;
 }
 
-/* ── Name / LinkedIn Link ──────────────────────────────────── */
-.bar-name {
-  font-size:   var(--nav-size);
-  font-weight: 500;
-  display:     inline-flex;
-  align-items: center;
-  gap:         0;
-  overflow:    hidden;
-  opacity:     1;
+.bar-name { font-size: var(--nav-size); font-weight: 500; }
+
+/* LinkedIn hover — same underline effect as email */
+.bar-name { opacity: 1 !important; } /* override generic a:hover opacity */
+
+.bar-name-text { position: relative; }
+
+.bar-name-text::after {
+  content:          '';
+  position:         absolute;
+  width:            100%;
+  transform:        scaleX(0);
+  height:           1px;
+  bottom:           -2px;
+  left:             0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition:       transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.bar-name:hover { opacity: 1; }
-
-/* Exit easing — smooth ease-out when leaving */
-.bar-name-text {
-  display:    inline-block;
-  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+.bar-name:hover .bar-name-text::after {
+  transform:        scaleX(1);
+  transform-origin: bottom left;
 }
-
-.bar-name-arrow {
-  display:     inline-block;
-  opacity:     0;
-  transform:   translateX(-6px) translateY(4px);
-  margin-left: 3px;
-  transition:  opacity   0.5s cubic-bezier(0.76, 0, 0.24, 1),
-               transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-/* Enter easing — snappy ease-in when hovering */
-.bar-name:hover .bar-name-text {
-  transform:  translateY(-1px);
-  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
-}
-
-.bar-name:hover .bar-name-arrow {
-  opacity:    1;
-  transform:  translateX(0) translateY(-1px);
-  transition: opacity   0.4s cubic-bezier(0.34, 1.2, 0.64, 1),
-              transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
-}
-
 
 /* ── Main ──────────────────────────────────────────────────── */
 main {
