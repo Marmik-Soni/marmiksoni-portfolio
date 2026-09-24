@@ -13,32 +13,128 @@
 </head>
 <body>
 
-  <header>
-    <div class="name-block">
-      <span class="contact-label">Designer &amp; Developer</span>
-      <a href="https://linkedin.com/in/marmiksoni" target="_blank" rel="noopener noreferrer" class="bar-name" aria-label="Marmik Soni on LinkedIn">
-        <span class="bar-name-text">Marmik Soni</span>
-      </a>
+  <header></header>
+
+  <main>
+    <div class="reveal-wrap">
+      <h1 class="reveal-text">Coming Soon</h1>
     </div>
-    <div class="contact-block">
+    <div class="reveal-wrap delay-1">
+      <p class="reveal-text">Hang on.... I'm making it look good.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-left">
       <span class="contact-label">Drop me a line</span>
       <button class="email-button" onclick="copyEmail()" aria-label="Copy email address">
         <span class="email-text">hello@marmiksoni.co</span>
       </button>
     </div>
-  </header>
-
-  <main>
-    <h1>Coming Soon</h1>
-    <p>Currently cooking up a brand new web experience. Please stand by.</p>
-  </main>
-
-  <footer>
+    <div class="footer-right">
+      <span class="contact-label">Based in India</span>
+      <span class="footer-year">&copy; <span id="year"></span> Marmik Soni</span>
+    </div>
   </footer>
 
   <div class="toast" id="toast">Email copied to clipboard</div>
+  <div class="custom-cursor hidden" id="custom-cursor"></div>
 
   <script>
+    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    // Advanced Cursor Logic
+    const cursor = document.getElementById('custom-cursor');
+    if (cursor) {
+      let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      let pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      let scale = 0;
+      let angle = 0;
+      let isVisible = false;
+
+      const updateMouse = (x, y) => {
+        mouse.x = x;
+        mouse.y = y;
+        if (!isVisible) {
+          pos.x = x;
+          pos.y = y;
+          cursor.classList.remove('hidden');
+          isVisible = true;
+        }
+      };
+
+      window.addEventListener('mousemove', (e) => updateMouse(e.clientX, e.clientY));
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        cursor.classList.add('hidden');
+        isVisible = false;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        cursor.classList.add('hidden');
+        isVisible = false;
+      });
+
+      document.addEventListener('mouseenter', (e) => {
+        updateMouse(e.clientX, e.clientY);
+      });
+
+      const loop = () => {
+        // Lag effect (lower is more laggy)
+        pos.x += (mouse.x - pos.x) * 0.15;
+        pos.y += (mouse.y - pos.y) * 0.15;
+
+        // Velocity stretch effect
+        const dx = mouse.x - pos.x;
+        const dy = mouse.y - pos.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        scale = Math.min(distance * 0.005, 0.5); // max 1.5x stretch
+
+        if (distance > 1) {
+          angle = Math.atan2(dy, dx);
+        }
+
+        const sx = 1 + scale;
+        const sy = 1 - scale * 0.5;
+
+        cursor.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%) rotate(${angle}rad) scale(${sx}, ${sy})`;
+        requestAnimationFrame(loop);
+      };
+
+      requestAnimationFrame(loop);
+
+      const hoverTargets = document.querySelectorAll('a, button');
+      hoverTargets.forEach(target => {
+        target.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        target.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+      });
+    }
+
+    // Magnetic Button Logic
+    const magneticButton = document.querySelector('.email-button');
+    if (magneticButton && !isTouch) {
+      magneticButton.addEventListener('mousemove', (e) => {
+        const rect = magneticButton.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        magneticButton.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+
+      magneticButton.addEventListener('mouseleave', () => {
+        magneticButton.style.transform = `translate(0px, 0px)`;
+      });
+    }
+
+    // Set current year dynamically
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     function copyEmail() {
       var email = 'hello@marmiksoni.co';
 
