@@ -19,9 +19,9 @@
   --soft:      #777777;
   --m:         clamp(20px, 5vw, 64px);
   --title:     clamp(40px, 13vw, 160px);
-  --nav-size:  clamp(10px, 1.8vw, 14px);
-  --sub-size:  clamp(9px, 1.4vw, 12px);
-  --body-size: clamp(13px, 1.8vw, 18px);
+  --nav-size:  clamp(13px, 1.8vw, 15px);
+  --sub-size:  clamp(11px, 1.4vw, 13px);
+  --body-size: clamp(14px, 1.8vw, 18px);
 }
 
 
@@ -31,12 +31,12 @@ html { height: 100%; overflow-x: hidden; }
 body { min-height: 100dvh; overflow-x: hidden; overscroll-behavior-y: auto; }
 
 ::selection {
-  background: var(--ink);
-  color: var(--canvas);
+  background: rgba(128, 128, 128, 0.25);
+  color: inherit;
 }
 ::-moz-selection {
-  background: var(--ink);
-  color: var(--canvas);
+  background: rgba(128, 128, 128, 0.25);
+  color: inherit;
 }
 
 /* ── Body ──────────────────────────────────────────────────── */
@@ -86,26 +86,20 @@ header {
   gap:             clamp(12px, 4vw, 40px);
 }
 
-.header-status {
+.header-col,
+.footer-col {
   display:        flex;
   flex-direction: column;
+  align-items:    flex-start;
+  gap:            4px;
+}
+
+.align-right {
   align-items:    flex-end;
-  gap:            4px;
+  text-align:     right;
 }
 
-.contact-block {
-  display:        flex;
-  flex-direction: column;
-  align-items:    flex-start;
-  gap:            4px;
-}
 
-.name-block {
-  display:        flex;
-  flex-direction: column;
-  align-items:    flex-start;
-  gap:            4px;
-}
 
 .bar-name { font-size: var(--nav-size); font-weight: 500; }
 
@@ -162,7 +156,7 @@ main {
 }
 
 h1 {
-  font-size:      clamp(32px, 7vw, 96px);
+  font-size:      clamp(48px, 10vw, 96px);
   font-weight:    700;
   line-height:    1;
   letter-spacing: -0.03em;
@@ -185,19 +179,6 @@ footer {
   color:           var(--soft);
 }
 
-.footer-left {
-  display:        flex;
-  flex-direction: column;
-  align-items:    flex-start;
-  gap:            4px;
-}
-
-.footer-right {
-  display:        flex;
-  flex-direction: column;
-  align-items:    flex-end;
-  gap:            4px;
-}
 
 .footer-year {
   font-size:   var(--nav-size);
