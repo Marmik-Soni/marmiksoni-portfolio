@@ -277,10 +277,15 @@ footer {
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: difference;
-  will-change: transform, width, height, opacity;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  will-change: transform, width, height, opacity, background-color;
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.7s ease,
               opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--canvas);
 }
 
 .custom-cursor.hovering {
@@ -291,3 +296,4 @@ footer {
 .custom-cursor.hidden {
   opacity: 0;
 }
+
