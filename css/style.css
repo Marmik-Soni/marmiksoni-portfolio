@@ -195,7 +195,7 @@ footer {
 .email-button {
   background:     none;
   border:         none;
-  color:          inherit;
+  color:          var(--ink);
   font:           inherit;
   font-weight:    700;
   cursor:         pointer;
