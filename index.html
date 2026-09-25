@@ -13,42 +13,34 @@
 </head>
 <body>
 
-  <header>
-    <div class="header-col">
-      <span class="contact-label">Designer &amp; Developer</span>
-      <a href="https://linkedin.com/in/marmiksoni" target="_blank" rel="noopener noreferrer" class="bar-name" aria-label="Marmik Soni on LinkedIn">
-        <span class="bar-name-text">Marmik Soni</span>
-      </a>
-    </div>
-    <div class="header-col align-right">
-      <span class="contact-label">Portfolio</span>
-      <span class="bar-name">Version 2.0</span>
-    </div>
-  </header>
+  <main class="editorial-layout">
+    <div class="top-section">
+      <div class="top-left">
+        <div class="reveal-wrap">
+          <h1 class="reveal-text">I&rsquo;m cooking something,<br>stay tuned.</h1>
+        </div>
 
-  <main>
-    <div class="reveal-wrap">
-      <h1 class="reveal-text">Coming<br>Soon.</h1>
+      </div>
+      
+      <div class="top-right">
+        <div class="reveal-wrap delay-1">
+          <nav class="social-nav reveal-text">
+            <a href="#" class="social-link">Instagram</a>
+            <a href="https://linkedin.com/in/marmiksoni" target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+            <a href="#" class="social-link">Twitter</a>
+            <a href="#" onclick="copyEmail(event)" class="social-link">Email</a>
+          </nav>
+        </div>
+      </div>
     </div>
-    <div class="reveal-wrap delay-1">
-      <p class="reveal-text">Currently cooking. Please do not rush the chef.</p>
+    
+    <div class="bottom-section">
+      <div class="giant-text-wrap reveal-wrap delay-1">
+        <h2 class="giant-text reveal-text">Marmik Soni</h2>
+      </div>
     </div>
   </main>
 
-  <footer>
-    <div class="footer-col">
-      <span class="contact-label">Meanwhile, drop me a line</span>
-      <button class="email-button" onclick="copyEmail()" aria-label="Copy email address">
-        <span class="email-text">hello@marmiksoni.co</span>
-      </button>
-    </div>
-    <div class="footer-col align-right">
-      <span class="contact-label">Based in India</span>
-      <span class="footer-year">&copy; <span id="year"></span> Marmik Soni</span>
-    </div>
-  </footer>
-
-  <div class="toast" id="toast">Email copied to clipboard</div>
   <div class="custom-cursor hidden" id="custom-cursor"></div>
 
   <script>
@@ -143,21 +135,21 @@
       });
     }
 
-    // Set current year dynamically
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Footer removed
 
-    function copyEmail() {
+    function copyEmail(e) {
+      e.preventDefault();
       var email = 'hello@marmiksoni.co';
+      var target = e.currentTarget;
+      var originalText = target.textContent;
 
-      var showToast = function () {
-        var toast = document.getElementById('toast');
-        toast.classList.add('show');
+      var showSuccess = function () {
+        target.textContent = 'copied!';
         setTimeout(function () {
-          toast.classList.remove('show');
-        }, 2500);
+          target.textContent = originalText;
+        }, 2000);
       };
 
-      // Fallback for HTTP / Mobile Safari
       if (!navigator.clipboard || window.isSecureContext === false) {
         var textArea = document.createElement('textarea');
         textArea.value = email;
@@ -169,7 +161,7 @@
         textArea.select();
         try {
           document.execCommand('copy');
-          showToast();
+          showSuccess();
         } catch (err) {
           console.error('Fallback copy failed', err);
         }
@@ -177,13 +169,13 @@
         return;
       }
 
-      // Modern HTTPS
       navigator.clipboard.writeText(email).then(function () {
-        showToast();
+        showSuccess();
       }).catch(function (err) {
         console.error('Clipboard copy failed', err);
       });
     }
+
   </script>
 
 </body>
