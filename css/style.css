@@ -28,7 +28,7 @@
 /* ── Reset ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { height: 100%; overflow-x: hidden; }
-body { min-height: 100dvh; overflow-x: hidden; overscroll-behavior-y: auto; }
+body { min-height: 100dvh; overflow-x: hidden; overscroll-behavior-y: none; }
 
 ::selection {
   background: rgba(128, 128, 128, 0.25);
@@ -191,20 +191,36 @@ a {
   text-transform: uppercase;
 }
 
-@media (max-width: 768px) {
-  .top-section {
-    flex-direction: column;
-    gap: 48px;
+@media (max-width: 1024px) and (orientation: portrait), (max-width: 768px) {
+  .editorial-layout {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
   }
-  .top-right {
-    align-items: flex-start;
-  }
-  .social-nav {
-    align-items: flex-start;
+  .bottom-section {
+    margin-top: 16vh;
+    margin-bottom: 40px;
   }
   .giant-text {
     font-size: 15vw;
+    margin-bottom: 0;
   }
+  .top-section {
+    flex-direction: column-reverse;
+  }
+  .top-right {
+    margin-top: 0;
+    margin-bottom: 40px;
+    align-items: flex-end;
+    align-self: flex-end;
+  }
+  .social-nav {
+    align-items: flex-end;
+  }
+  
+  /* Mobile Sequence (Top to Bottom) */
+  .bottom-section .reveal-text { animation-delay: 0s; }
+  .top-right .reveal-text { animation-delay: 0.25s; }
+  .top-left .reveal-text { animation-delay: 0.5s; }
 }
 
 /* Text Reveal Animation */
@@ -215,9 +231,12 @@ a {
   transform: translateY(120%);
   animation: revealUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
-.delay-1 .reveal-text {
-  animation-delay: 0.25s;
-}
+
+/* Desktop Sequence (Top to Bottom) */
+.top-left .reveal-text { animation-delay: 0s; }
+.top-right .reveal-text { animation-delay: 0.25s; }
+.bottom-section .reveal-text { animation-delay: 0.5s; }
+
 @keyframes revealUp {
   from { transform: translateY(120%); }
   to { transform: translateY(0); }
