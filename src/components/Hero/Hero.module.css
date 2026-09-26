@@ -21,12 +21,14 @@
   display: block;
   overflow: hidden;
   line-height: calc(var(--lh) * 1em + 0.08em);
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
 }
 
 .wordWrap span {
   display: block;
   white-space: nowrap;
-  transform: translateY(110%);
+  transform: translateY(150%);
 }
 
 .lede {
