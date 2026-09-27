@@ -12,6 +12,7 @@ export function ThemeToggle({ className = 'bar-theme' }: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line
     setMounted(true);
   }, []);
 
@@ -19,23 +20,25 @@ export function ThemeToggle({ className = 'bar-theme' }: ThemeToggleProps) {
     // Return a hidden placeholder of the same size to prevent layout shift or hydration errors
     return (
       <button className={className} style={{ visibility: 'hidden' }} aria-hidden="true">
+        <svg width="16" height="16" />
         <span className="theme-text">Light</span>
-        <svg width="20" height="20" />
       </button>
     );
   }
 
   return (
-    <button 
-      onClick={toggleTheme}
-      className={className}
-      aria-label="Toggle theme"
-    >
-      <span className="theme-text">
-        {theme.charAt(0).toUpperCase() + theme.slice(1)}
-      </span>
+    <button onClick={toggleTheme} className={className} aria-label="Toggle theme">
       {theme === 'light' ? (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
           <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -47,10 +50,20 @@ export function ThemeToggle({ className = 'bar-theme' }: ThemeToggleProps) {
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
       ) : (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       )}
+      <span className="theme-text">{theme.charAt(0).toUpperCase() + theme.slice(1)}</span>
     </button>
   );
 }
