@@ -44,7 +44,9 @@ export function Hero() {
         <div className={styles.wordWrap}><span ref={addToWordsRef}>&amp; Developer</span></div>
       </h1>
       <p className={styles.lede} ref={ledeRef}>
-        Web Designer &amp; Developer designing digital products end-to-end, helping build experiences that work for both users and business goals.
+        Designing and building<br />
+        digital products end-to-end<br />
+        that work for users and business goals.
       </p>
     </main>
   );

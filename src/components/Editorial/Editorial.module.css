@@ -9,7 +9,7 @@
 
 .imageWrapper {
   grid-column: 2 / 7;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
 }
@@ -41,12 +41,14 @@
   margin-bottom: 24px;
   font-weight: 500;
   letter-spacing: -0.01em;
+  text-align: justify;
 }
 
 .sub {
   color: var(--soft);
   line-height: 1.5;
   margin-bottom: 32px;
+  text-align: justify;
 }
 
 .divider {
