@@ -1,0 +1,151 @@
+.services {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: calc(24px + (48px - 24px) * var(--p));
+  margin-top: calc(var(--m) * 2);
+  margin-bottom: calc(var(--m) * 2);
+}
+
+.content {
+  grid-column: 1 / 7;
+}
+
+.heading {
+  font-size: calc(32px + (48px - 32px) * var(--p));
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 48px;
+  line-height: 1.1;
+}
+
+.list {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.item {
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.3s ease;
+}
+
+/* Dimming sibling items on hover using :has() */
+.list:hover:has(.item:hover) .item:not(:hover) {
+  opacity: 0.2;
+}
+
+.itemHeader {
+  padding: 32px 0;
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  cursor: pointer;
+}
+
+.num {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--soft);
+}
+
+.title {
+  font-size: calc(24px + (32px - 24px) * var(--p));
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.item:hover .title {
+  transform: translateX(12px);
+}
+
+/* ── Desktop Previews ──────────────────────────────────────── */
+.previewArea {
+  grid-column: 8 / 13;
+  position: relative;
+}
+
+.previewItem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.previewItem.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.previewImage {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  background: var(--line);
+}
+
+.previewImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.item:hover ~ * .previewImage img,
+.previewItem.active .previewImage img {
+  transform: scale(1.05);
+}
+
+.previewDesc {
+  color: var(--soft);
+  line-height: 1.5;
+}
+
+/* ── Mobile Accordion ──────────────────────────────────────── */
+.mobilePreview {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .services {
+    grid-template-columns: 1fr;
+  }
+  .content {
+    grid-column: 1 / -1;
+  }
+  .previewArea {
+    display: none;
+  }
+  .itemHeader {
+    padding: 24px 0;
+  }
+  .title {
+    font-size: 24px;
+  }
+  .item:hover .title {
+    transform: none; /* Disable hover translation on mobile */
+  }
+  .list:hover:has(.item:hover) .item:not(:hover) {
+    opacity: 1; /* Disable dimming on mobile */
+  }
+  
+  /* CSS Grid Accordion Trick */
+  .mobilePreview {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s ease;
+  }
+  .mobilePreviewInner {
+    overflow: hidden;
+  }
+  .mobilePreviewInnerContent {
+    padding-bottom: 32px;
+  }
+  .item.active .mobilePreview {
+    grid-template-rows: 1fr;
+  }
+}
