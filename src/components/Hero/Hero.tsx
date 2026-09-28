@@ -6,25 +6,17 @@ import styles from './Hero.module.css';
 
 export function Hero() {
   const wordsRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const ledeRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    // Small delay to allow initial layout to settle
+    // Add base delay to allow initial layout to settle
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      const tl = gsap.timeline({ delay: 0.4, defaults: { ease: 'power3.out' } });
 
       tl.to(wordsRef.current, {
         y: '0%',
-        duration: 1.0,
-        stagger: 0.08
+        duration: 1.5,
+        stagger: 0.15
       });
-
-      tl.to(ledeRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.75,
-        ease: 'power2.out'
-      }, '-=0.6');
     });
 
     return () => ctx.revert();
@@ -43,11 +35,11 @@ export function Hero() {
         <div className={styles.wordWrap}><span ref={addToWordsRef}>Designer</span></div>
         <div className={styles.wordWrap}><span ref={addToWordsRef}>&amp; Developer</span></div>
       </h1>
-      <p className={styles.lede} ref={ledeRef}>
-        Designing and building<br />
-        digital products end-to-end<br />
-        that work for users and business goals.
-      </p>
+      <div className={styles.lede}>
+        <div className={styles.wordWrap}><span ref={addToWordsRef}>Designing and building</span></div>
+        <div className={styles.wordWrap}><span ref={addToWordsRef}>digital products end-to-end</span></div>
+        <div className={styles.wordWrap}><span ref={addToWordsRef}>that work for users and business goals.</span></div>
+      </div>
     </main>
   );
 }
