@@ -220,13 +220,13 @@ a {
   }
   
   /* Mobile Sequence */
-  .bottom-section .reveal-text { animation-delay: 0s; }
-  .social-nav .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.10s; }
-  .social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.15s; }
-  .social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.20s; }
-  .social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.25s; }
-  .top-left .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.30s; }
-  .top-left .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.35s; }
+  .bottom-section .reveal-text { animation-delay: 0.40s; }
+  .social-nav .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.50s; }
+  .social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.55s; }
+  .social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.60s; }
+  .social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.65s; }
+  .top-left .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.70s; }
+  .top-left .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.75s; }
 }
 
 /* Text Reveal Animation */
@@ -239,13 +239,13 @@ a {
 }
 
 /* Desktop Sequence */
-.bottom-section .reveal-text { animation-delay: 0s; }
-.social-nav .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.10s; }
-.social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.15s; }
-.social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.20s; }
-.social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.25s; }
-.top-left .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.30s; }
-.top-left .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.35s; }
+.bottom-section .reveal-text { animation-delay: 0.40s; }
+.social-nav .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.50s; }
+.social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.55s; }
+.social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.60s; }
+.social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.65s; }
+.top-left .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.70s; }
+.top-left .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.75s; }
 
 @keyframes revealUp {
   from { transform: translateY(120%); }
