@@ -19,7 +19,7 @@
   --soft:      #777777;
   --m:         clamp(16px, 3vw, 40px);
   --title:     clamp(40px, 13vw, 160px);
-  --nav-size:  clamp(18px, 2.5vw, 24px);
+  --nav-size:  clamp(22px, 3vw, 32px);
   --sub-size:  clamp(11px, 1.4vw, 13px);
   --body-size: clamp(14px, 1.8vw, 18px);
 }
@@ -218,10 +218,10 @@ a {
     align-items: flex-end;
   }
   
-  /* Mobile Sequence (Top to Bottom) */
+  /* Mobile Sequence */
   .bottom-section .reveal-text { animation-delay: 0s; }
-  .top-right .reveal-text { animation-delay: 0.25s; }
-  .top-left .reveal-text { animation-delay: 0.5s; }
+  .top-right .reveal-text { animation-delay: 0.3s; }
+  .top-left .reveal-text { animation-delay: 0.6s; }
 }
 
 /* Text Reveal Animation */
@@ -230,13 +230,13 @@ a {
 }
 .reveal-text {
   transform: translateY(120%);
-  animation: revealUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  animation: revealUp 1.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
-/* Desktop Sequence (Top to Bottom) */
-.top-left .reveal-text { animation-delay: 0s; }
-.top-right .reveal-text { animation-delay: 0.25s; }
-.bottom-section .reveal-text { animation-delay: 0.5s; }
+/* Desktop Sequence */
+.bottom-section .reveal-text { animation-delay: 0s; }
+.top-right .reveal-text { animation-delay: 0.3s; }
+.top-left .reveal-text { animation-delay: 0.6s; }
 
 @keyframes revealUp {
   from { transform: translateY(120%); }
