@@ -14,8 +14,8 @@ export function Hero() {
 
       tl.to(wordsRef.current, {
         y: '0%',
-        duration: 1.5,
-        stagger: 0.15
+        duration: 1.0,
+        stagger: 0.08
       });
     });
 
