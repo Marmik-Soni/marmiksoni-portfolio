@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { FluidScaleProvider } from "@/components/providers/FluidScaleProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Marmik Soni — Portfolio",
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <FluidScaleProvider>{children}</FluidScaleProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
