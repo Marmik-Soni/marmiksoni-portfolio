@@ -119,6 +119,7 @@ a {
   letter-spacing: 0.05em;
   position: relative;
   padding: 4px 0;
+  display: inline-block;
 }
 
 .social-link::after {
@@ -220,8 +221,11 @@ a {
   
   /* Mobile Sequence */
   .bottom-section .reveal-text { animation-delay: 0s; }
-  .top-right .reveal-text { animation-delay: 0.15s; }
-  .top-left .reveal-text { animation-delay: 0.3s; }
+  .social-nav .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.10s; }
+  .social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.15s; }
+  .social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.20s; }
+  .social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.25s; }
+  .top-left .reveal-text { animation-delay: 0.30s; }
 }
 
 /* Text Reveal Animation */
@@ -235,8 +239,11 @@ a {
 
 /* Desktop Sequence */
 .bottom-section .reveal-text { animation-delay: 0s; }
-.top-right .reveal-text { animation-delay: 0.15s; }
-.top-left .reveal-text { animation-delay: 0.3s; }
+.social-nav .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.10s; }
+.social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.15s; }
+.social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.20s; }
+.social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.25s; }
+.top-left .reveal-text { animation-delay: 0.30s; }
 
 @keyframes revealUp {
   from { transform: translateY(120%); }
