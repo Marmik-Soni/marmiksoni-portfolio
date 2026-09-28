@@ -17,32 +17,43 @@ Most scrapers (including WhatsApp, iMessage, Facebook, and Twitter) **do not sup
 
 ---
 
-### How to Make it Work Everywhere
+### How to Make it Work in Next.js (App Router)
 
-Add the following Open Graph and Twitter Card `<meta>` tags inside the `<head>` section of your HTML page:
+In Next.js, instead of manually adding `<meta>` tags to your HTML, you define a `metadata` object in your `src/app/layout.tsx` or `src/app/page.tsx` file. Next.js automatically generates the correct HTML tags for you.
 
-```html
-<!-- Primary Meta Tags -->
-<title>Zajno Digital Studio | Web Design, Branding, 3D, Animation & Webflow Development Services</title>
-<meta name="title" content="Zajno Digital Studio | Web Design, Branding, 3D, Animation & Webflow Development Services" />
-<meta name="description" content="We are making award-winning immersive websites and apps with cool custom graphics, photos, videos, and animations. Let's Collaborate!" />
+Here is the setup for your portfolio:
 
-<!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://zajno.com/" />
-<meta property="og:title" content="Zajno Digital Studio | Web Design, Branding, 3D, Animation & Webflow Development Services" />
-<meta property="og:description" content="We are making award-winning immersive websites and apps with cool custom graphics, photos, videos, and animations. Let's Collaborate!" />
-<meta property="og:image" content="https://zajno.com/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:type" content="image/png" />
+```typescript
+// src/app/layout.tsx
+import type { Metadata } from 'next';
 
-<!-- Twitter / X -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content="https://zajno.com/" />
-<meta name="twitter:title" content="Zajno Digital Studio | Web Design, Branding, 3D, Animation & Webflow Development Services" />
-<meta name="twitter:description" content="We are making award-winning immersive websites and apps with cool custom graphics, photos, videos, and animations. Let's Collaborate!" />
-<meta name="twitter:image" content="https://zajno.com/og-image.png" />
+export const metadata: Metadata = {
+  title: 'Marmik Soni | Web Designer & Developer',
+  description: 'Designing and building digital products end-to-end that work for users and business goals.',
+  
+  // Open Graph / Facebook / WhatsApp / LinkedIn
+  openGraph: {
+    type: 'website',
+    url: 'https://marmiksoni.co/',
+    title: 'Marmik Soni | Web Designer & Developer',
+    description: 'Designing and building digital products end-to-end that work for users and business goals.',
+    siteName: 'Marmik Soni Portfolio',
+    images: [{
+      url: 'https://marmiksoni.co/og-image.png', // Must be an absolute URL
+      width: 1200,
+      height: 630,
+      alt: 'Marmik Soni Portfolio Preview',
+    }],
+  },
+
+  // Twitter / X
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Marmik Soni | Web Designer & Developer',
+    description: 'Designing and building digital products end-to-end that work for users and business goals.',
+    images: ['https://marmiksoni.co/og-image.png'], // Must be an absolute URL
+  },
+};
 ```
 
 ---
