@@ -220,8 +220,8 @@ a {
   
   /* Mobile Sequence */
   .bottom-section .reveal-text { animation-delay: 0s; }
-  .top-right .reveal-text { animation-delay: 0.3s; }
-  .top-left .reveal-text { animation-delay: 0.6s; }
+  .top-right .reveal-text { animation-delay: 0.15s; }
+  .top-left .reveal-text { animation-delay: 0.3s; }
 }
 
 /* Text Reveal Animation */
@@ -235,8 +235,8 @@ a {
 
 /* Desktop Sequence */
 .bottom-section .reveal-text { animation-delay: 0s; }
-.top-right .reveal-text { animation-delay: 0.3s; }
-.top-left .reveal-text { animation-delay: 0.6s; }
+.top-right .reveal-text { animation-delay: 0.15s; }
+.top-left .reveal-text { animation-delay: 0.3s; }
 
 @keyframes revealUp {
   from { transform: translateY(120%); }
