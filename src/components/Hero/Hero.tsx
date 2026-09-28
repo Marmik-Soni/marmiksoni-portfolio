@@ -15,7 +15,7 @@ export function Hero() {
       tl.to(wordsRef.current, {
         y: '0%',
         duration: 1.0,
-        stagger: 0.08
+        stagger: 0.08,
       });
     });
 
@@ -31,14 +31,26 @@ export function Hero() {
   return (
     <main className={`grid-12 ${styles.hero}`} id="top">
       <h1 className={styles.title}>
-        <div className={styles.wordWrap}><span ref={addToWordsRef}>Web</span></div>
-        <div className={styles.wordWrap}><span ref={addToWordsRef}>Designer</span></div>
-        <div className={styles.wordWrap}><span ref={addToWordsRef}>&amp; Developer</span></div>
+        <div className={styles.wordWrap}>
+          <span ref={addToWordsRef}>Web</span>
+        </div>
+        <div className={styles.wordWrap}>
+          <span ref={addToWordsRef}>Designer</span>
+        </div>
+        <div className={styles.wordWrap}>
+          <span ref={addToWordsRef}>&amp; Developer</span>
+        </div>
       </h1>
       <div className={styles.lede}>
-        <div className={styles.wordWrap}><span ref={addToWordsRef}>Designing and building</span></div>
-        <div className={styles.wordWrap}><span ref={addToWordsRef}>digital products end-to-end</span></div>
-        <div className={styles.wordWrap}><span ref={addToWordsRef}>that work for users and business goals.</span></div>
+        <div className={styles.wordWrap}>
+          <span ref={addToWordsRef}>Designing and building</span>
+        </div>
+        <div className={styles.wordWrap}>
+          <span ref={addToWordsRef}>digital experiences that work</span>
+        </div>
+        <div className={styles.wordWrap}>
+          <span ref={addToWordsRef}>for users and business goals.</span>
+        </div>
       </div>
     </main>
   );
