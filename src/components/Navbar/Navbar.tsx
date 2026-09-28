@@ -12,7 +12,7 @@ export function Navbar() {
   useEffect(() => {
     // Initial state to avoid flicker, then drop in
     gsap.set(barRef.current, { opacity: 0, y: -20 });
-    gsap.to(barRef.current, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', delay: 0.1 });
+    gsap.to(barRef.current, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', delay: 0.6 });
   }, []);
 
   return (

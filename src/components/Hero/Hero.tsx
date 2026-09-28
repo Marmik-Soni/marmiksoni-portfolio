@@ -10,7 +10,7 @@ export function Hero() {
   useEffect(() => {
     // Add base delay to allow initial layout to settle
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.4, defaults: { ease: 'power3.out' } });
+      const tl = gsap.timeline({ delay: 0.1, defaults: { ease: 'power3.out' } });
 
       tl.to(wordsRef.current, {
         y: '0%',
