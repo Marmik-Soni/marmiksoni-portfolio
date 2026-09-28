@@ -57,6 +57,8 @@
       let angle = 0;
       let isVisible = false;
 
+      let lastTouchTime = 0;
+
       const updateMouse = (x, y) => {
         mouse.x = x;
         mouse.y = y;
@@ -68,16 +70,24 @@
         }
       };
 
-      window.addEventListener('mousemove', (e) => updateMouse(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => {
+        // Ignore synthetic mouse events that fire right after a touch tap
+        if (Date.now() - lastTouchTime < 500) return;
+        updateMouse(e.clientX, e.clientY);
+      });
+      
       window.addEventListener('touchmove', (e) => {
+        lastTouchTime = Date.now();
         if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
       
       window.addEventListener('touchstart', (e) => {
+        lastTouchTime = Date.now();
         if (e.touches.length > 0) updateMouse(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
 
       window.addEventListener('touchend', () => {
+        lastTouchTime = Date.now();
         cursor.classList.add('hidden');
         isVisible = false;
       });
