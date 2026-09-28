@@ -225,7 +225,8 @@ a {
   .social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.15s; }
   .social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.20s; }
   .social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.25s; }
-  .top-left .reveal-text { animation-delay: 0.30s; }
+  .top-left .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.30s; }
+  .top-left .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.35s; }
 }
 
 /* Text Reveal Animation */
@@ -243,7 +244,8 @@ a {
 .social-nav .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.15s; }
 .social-nav .reveal-wrap:nth-child(3) .reveal-text { animation-delay: 0.20s; }
 .social-nav .reveal-wrap:nth-child(4) .reveal-text { animation-delay: 0.25s; }
-.top-left .reveal-text { animation-delay: 0.30s; }
+.top-left .reveal-wrap:nth-child(1) .reveal-text { animation-delay: 0.30s; }
+.top-left .reveal-wrap:nth-child(2) .reveal-text { animation-delay: 0.35s; }
 
 @keyframes revealUp {
   from { transform: translateY(120%); }
