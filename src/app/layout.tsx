@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { FluidScaleProvider } from "@/components/providers/FluidScaleProvider";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from 'next';
+import './globals.css';
+import { FluidScaleProvider } from '@/components/providers/FluidScaleProvider';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
-  title: "Marmik Soni — Portfolio",
-  description: "Personal portfolio of Marmik Soni",
+  title: 'Marmik Soni — Portfolio',
+  description: 'Personal portfolio of Marmik Soni',
 };
 
 const initScript = `
@@ -41,19 +41,41 @@ const initScript = `
   })();
 `;
 
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/fonts/Trap-Regular.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/Trap-Medium.otf" as="font" type="font/otf" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/Trap-SemiBold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          href="/fonts/Trap-Regular.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Trap-Medium.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Trap-SemiBold.otf"
+          as="font"
+          type="font/otf"
+          crossOrigin="anonymous"
+        />
         <script dangerouslySetInnerHTML={{ __html: initScript }} />
       </head>
       <body>
-        <ThemeProvider>
-          <FluidScaleProvider>{children}</FluidScaleProvider>
-        </ThemeProvider>
+        <SmoothScrollProvider>
+          <ThemeProvider>
+            <FluidScaleProvider>{children}</FluidScaleProvider>
+          </ThemeProvider>
+        </SmoothScrollProvider>
         <Analytics />
       </body>
     </html>
