@@ -1,7 +1,7 @@
 .bar {
   align-items: center;
-  padding-top: calc(var(--m) * 0.8);
-  margin-bottom: calc(var(--m) * 2);
+  padding-top: calc(var(--m) * 1);
+  margin-bottom: calc(var(--m) * 1.8);
 }
 
 .name {
@@ -11,7 +11,9 @@
   transition: opacity 0.25s ease;
 }
 
-.name:hover { opacity: 0.5; }
+.name:hover {
+  opacity: 0.5;
+}
 
 .nav {
   grid-column: 4 / 10;
@@ -25,7 +27,9 @@
   transition: opacity 0.25s ease;
 }
 
-.nav a:hover { opacity: 0.5; }
+.nav a:hover {
+  opacity: 0.5;
+}
 
 .theme {
   grid-column: 10 / 13;
@@ -43,9 +47,15 @@
   transition: opacity 0.25s ease;
 }
 
-.theme:hover { opacity: 0.5; }
+.theme:hover {
+  opacity: 0.5;
+}
 
 @media (max-width: 1024px) {
-  .nav { display: none; }
-  .name { grid-column: 1 / 6; }
+  .nav {
+    display: none;
+  }
+  .name {
+    grid-column: 1 / 6;
+  }
 }

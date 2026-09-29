@@ -4,11 +4,12 @@
   gap: calc(24px + (48px - 24px) * var(--p));
   margin-top: calc(var(--m) * 2);
   margin-bottom: calc(var(--m) * 2);
-  align-items: center;
+  align-items: start;
 }
 
 .imageWrapper {
-  grid-column: 2 / 7;
+  grid-column: 7 / -1;
+  grid-row: 1;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 4px;
@@ -16,13 +17,14 @@
 
 .image {
   width: 100%;
-  height: 120%; /* Extra height for parallax */
+  height: 100%;
   object-fit: cover;
   will-change: transform;
 }
 
 .textWrapper {
-  grid-column: 8 / 12;
+  grid-column: 1 / 6;
+  grid-row: 1;
 }
 
 .label {
@@ -41,53 +43,24 @@
   margin-bottom: 24px;
   font-weight: 500;
   letter-spacing: -0.01em;
-  text-align: justify;
+  text-wrap: balance;
 }
 
 .sub {
   color: var(--soft);
   line-height: 1.5;
   margin-bottom: 32px;
-  text-align: justify;
-}
-
-.divider {
-  width: 100%;
-  height: 1px;
-  background: var(--ink);
-  opacity: 0.15;
-  margin-bottom: 32px;
-}
-
-.link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-  transition: opacity 0.25s ease;
-}
-
-.link:hover {
-  opacity: 0.5;
-}
-
-.link svg {
-  width: 18px;
-  height: 18px;
-  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.link:hover svg {
-  transform: translate(4px, -4px);
 }
 
 @media (max-width: 1024px) {
   .imageWrapper {
     grid-column: 1 / -1;
+    grid-row: auto;
     margin-bottom: 40px;
     aspect-ratio: 1;
   }
   .textWrapper {
     grid-column: 1 / -1;
+    grid-row: auto;
   }
 }

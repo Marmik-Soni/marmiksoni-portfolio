@@ -1,65 +1,135 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 import styles from './Editorial.module.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function Editorial() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const textWrapperRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    let animationFrameId: number;
+    const splits: SplitType[] = [];
 
-    const onScroll = () => {
-      animationFrameId = requestAnimationFrame(() => {
-        if (!imgRef.current) return;
-        const rect = imgRef.current.parentElement?.getBoundingClientRect();
-        if (!rect) return;
-        
-        // Calculate progress from 0 (entered bottom) to 1 (left top)
-        let progress = 1 - (rect.bottom / (window.innerHeight + rect.height));
-        progress = Math.max(0, Math.min(1, progress));
-        const yVal = -20 * progress;
-        
-        imgRef.current.style.transform = `translate3d(0, ${yVal}%, 0)`;
-      });
-    };
+    const ctx = gsap.context(() => {
+      if (textWrapperRef.current) {
+        const leadElement = textWrapperRef.current.querySelector(`.${styles.lead}`);
+        const subElements = textWrapperRef.current.querySelectorAll(`.${styles.sub}`);
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Trigger once on mount to set initial position
-    onScroll();
+        if (leadElement) splits.push(new SplitType(leadElement as HTMLElement, { types: 'lines' }));
+        subElements.forEach((el) =>
+          splits.push(new SplitType(el as HTMLElement, { types: 'lines' }))
+        );
+
+        // Wrap lines in hidden overflow containers for the sliding mask effect
+        splits.forEach((split) => {
+          split.lines?.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.display = 'block';
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.paddingBottom = '0.15em'; // prevents cutoff on descenders
+            wrapper.style.marginBottom = '-0.15em';
+            line.parentNode?.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+        });
+
+        // Animate label
+        const label = textWrapperRef.current.querySelector(`.${styles.label}`);
+        if (label) {
+          gsap.from(label, {
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+            },
+            opacity: 0,
+            y: 20,
+            duration: 1.0,
+            ease: 'power3.out',
+          });
+        }
+
+        // Collect all lines
+        const allLines = splits.flatMap((s) => s.lines);
+
+        if (allLines.length > 0) {
+          gsap.from(allLines, {
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+            },
+            y: '150%',
+            duration: 1.0,
+            stagger: 0.08,
+            ease: 'power3.out',
+          });
+        }
+
+        // Animate image wrapper (Curtain Reveal)
+        const imageWrapper = sectionRef.current?.querySelector(`.${styles.imageWrapper}`);
+        if (imageWrapper && imgRef.current) {
+          gsap.fromTo(
+            imageWrapper,
+            { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' },
+            {
+              clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 75%',
+              },
+              duration: 1.4,
+              ease: 'power4.inOut',
+            }
+          );
+
+          gsap.fromTo(
+            imgRef.current,
+            { scale: 1.15 },
+            {
+              scale: 1,
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 75%',
+              },
+              duration: 1.4,
+              ease: 'power4.inOut',
+            }
+          );
+        }
+      }
+    }, sectionRef);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(animationFrameId);
+      ctx.revert();
+      splits.forEach((split) => split.revert());
     };
   }, []);
 
   return (
-    <section className={styles.editorial} id="about">
+    <section ref={sectionRef} className={styles.editorial} id="about">
       <div className={styles.imageWrapper}>
-        <img 
+        <img
           ref={imgRef}
-          src="/images/portrait.jpg" 
-          alt="Editorial Portrait" 
-          className={styles.image} 
+          src="/images/portrait.jpg"
+          alt="Editorial Portrait"
+          className={styles.image}
         />
       </div>
-      <div className={styles.textWrapper}>
+      <div ref={textWrapperRef} className={styles.textWrapper}>
         <span className={styles.label}>About me</span>
         <p className={styles.lead}>
-          Passionate about web technologies. I love working at the intersection of creativity and user friendly interfaces. I create memorable web experiences.
+          Passionate about web technologies. I love working at the intersection of creativity and
+          user friendly interfaces. I create memorable web experiences.
         </p>
         <p className={styles.sub}>
-          When I'm not building or exploring new web experiences, I'm probably playing games or watching football.
+          When I&apos;m not building or exploring new web experiences, I&apos;m probably playing
+          games or watching football.
         </p>
-        <div className={styles.divider}></div>
-        <a href="#contact" className={styles.link}>
-          Get in touch
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="7" y1="17" x2="17" y2="7"></line>
-            <polyline points="7 7 17 7 17 17"></polyline>
-          </svg>
-        </a>
       </div>
     </section>
   );
