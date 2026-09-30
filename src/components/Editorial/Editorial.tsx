@@ -44,7 +44,7 @@ export function Editorial() {
         if (label) {
           gsap.from(label, {
             scrollTrigger: {
-              trigger: sectionRef.current,
+              trigger: textWrapperRef.current,
               start: 'top 75%',
             },
             opacity: 0,
@@ -60,7 +60,7 @@ export function Editorial() {
         if (allLines.length > 0) {
           gsap.from(allLines, {
             scrollTrigger: {
-              trigger: sectionRef.current,
+              trigger: textWrapperRef.current,
               start: 'top 75%',
             },
             y: '150%',
@@ -79,21 +79,7 @@ export function Editorial() {
             {
               clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
               scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 75%',
-              },
-              duration: 1.8,
-              ease: 'power4.out',
-            }
-          );
-
-          gsap.fromTo(
-            imgRef.current,
-            { scale: 1.15 },
-            {
-              scale: 1,
-              scrollTrigger: {
-                trigger: sectionRef.current,
+                trigger: imageWrapper,
                 start: 'top 75%',
               },
               duration: 1.8,
@@ -112,7 +98,10 @@ export function Editorial() {
 
   return (
     <section ref={sectionRef} className={styles.editorial} id="about">
-      <div className={styles.imageWrapper}>
+      <div
+        className={styles.imageWrapper}
+        style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' }}
+      >
         <img
           ref={imgRef}
           src="/images/portrait.jpg"
