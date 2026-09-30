@@ -82,8 +82,8 @@ export function Editorial() {
                 trigger: sectionRef.current,
                 start: 'top 75%',
               },
-              duration: 1.4,
-              ease: 'power4.inOut',
+              duration: 1.8,
+              ease: 'power4.out',
             }
           );
 
@@ -96,8 +96,8 @@ export function Editorial() {
                 trigger: sectionRef.current,
                 start: 'top 75%',
               },
-              duration: 1.4,
-              ease: 'power4.inOut',
+              duration: 1.8,
+              ease: 'power4.out',
             }
           );
         }
