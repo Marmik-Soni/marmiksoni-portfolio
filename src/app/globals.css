@@ -3,18 +3,53 @@
    ═══════════════════════════════════════════════════════════ */
 
 /* Trap Font — Self-hosted */
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-Light.otf') format('opentype'); font-weight: 300; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-ExtraBold.otf') format('opentype'); font-weight: 800; font-display: swap; }
-@font-face { font-family: 'Trap'; src: url('/fonts/Trap-Black.otf') format('opentype'); font-weight: 900; font-display: swap; }
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-Light.otf') format('opentype');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Trap';
+  src: url('/fonts/Trap-Black.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
 
 /* ── Design Tokens ─────────────────────────────────────────── */
 :root {
   --font: 'Trap', 'Geist Sans', sans-serif;
-  --canvas: #F4F4F3;
+  --canvas: #f4f4f3;
   --ink: #0f0f0f;
   --soft: #777777;
   --line: rgba(17, 17, 17, 0.1);
@@ -24,29 +59,38 @@
   --p: 0.6;
 
   /* Margins and Layout */
-  --m:      calc(24px + (80px - 24px) * var(--p));
-  --gap:    calc(16px + (32px - 16px) * var(--p));
-  --small:  calc(14px + (16px - 14px) * var(--p));
+  --m: calc(24px + (80px - 24px) * var(--p));
+  --gap: calc(16px + (32px - 16px) * var(--p));
+  --small: calc(14px + (16px - 14px) * var(--p));
 
   /* Huge Hero Typography */
-  --title:  min(calc(clamp(32px, 10vw, 120px) + (300px - clamp(32px, 10vw, 120px)) * var(--p)), 28svh);
-  --lh:     calc(0.92 + (0.86 - 0.92) * var(--p));
-  --track:  calc((-0.045 - 0.02 * var(--p)) * 1em);
-  --wght:   500;
+  --title: min(
+    calc(clamp(32px, 10vw, 120px) + (300px - clamp(32px, 10vw, 120px)) * var(--p)),
+    28svh
+  );
+  --lh: calc(0.92 + (0.86 - 0.92) * var(--p));
+  --track: calc((-0.045 - 0.02 * var(--p)) * 1em);
+  --wght: 500;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --canvas: #121212;
-  --ink: #F4F4F3;
-  --soft: #A0A0A0;
+  --ink: #f4f4f3;
+  --soft: #a0a0a0;
   --line: rgba(244, 244, 243, 0.15);
   color-scheme: dark;
 }
 
 /* ── Reset ─────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { 
-  -webkit-text-size-adjust: 100%; 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
@@ -59,18 +103,40 @@ html {
 body {
   background: var(--canvas);
   color: var(--ink);
-  font-family: var(--font), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    var(--font),
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-weight: 400;
   font-size: var(--small);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
-a { color: inherit; text-decoration: none; }
-a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+::selection {
+  background-color: var(--ink);
+  color: var(--canvas);
+}
 
 /* ── Grid Layout Architecture ──────────────────────────────── */
 .page {
