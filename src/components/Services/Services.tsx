@@ -135,10 +135,7 @@ export function Services() {
           I can help you with
         </h2>
 
-        <ul
-          className={styles.list}
-          onMouseLeave={handleMouseLeave}
-        >
+        <ul className={styles.list} onMouseLeave={handleMouseLeave}>
           {servicesData.map((service, idx) => {
             const isActive = activeIndex === idx || hoverIndex === idx;
             return (

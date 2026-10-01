@@ -12,7 +12,8 @@ export function Navbar() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Very smooth, effortless full-bar fade in
-      gsap.fromTo(barRef.current,
+      gsap.fromTo(
+        barRef.current,
         { opacity: 0, y: -15 },
         {
           opacity: 1,
@@ -24,7 +25,7 @@ export function Navbar() {
             if (barRef.current) {
               barRef.current.style.transform = 'none';
             }
-          }
+          },
         }
       );
     });
@@ -33,10 +34,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`grid-12 ${styles.bar}`}
-      ref={barRef}
-    >
+    <header className={`grid-12 ${styles.bar}`} ref={barRef}>
       <Link href="#top" className={styles.name}>
         Marmik Soni
       </Link>
