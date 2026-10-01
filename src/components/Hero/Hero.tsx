@@ -16,6 +16,11 @@ export function Hero() {
         y: '0%',
         duration: 1.5,
         stagger: 0.1,
+        onComplete: () => {
+          wordsRef.current.forEach((el) => {
+            if (el) el.style.transform = 'none';
+          });
+        },
       });
     });
 
