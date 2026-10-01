@@ -29,12 +29,11 @@
 
 .label {
   display: block;
-  font-size: 14px;
+  font-size: calc(32px + (48px - 32px) * var(--p));
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--soft);
-  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+  margin-bottom: 48px;
+  line-height: 1.1;
 }
 
 .lead {

@@ -110,7 +110,7 @@ export function Editorial() {
         />
       </div>
       <div ref={textWrapperRef} className={styles.textWrapper}>
-        <span className={styles.label}>About me</span>
+        <span className={styles.label}>Who am I</span>
         <p className={styles.lead}>
           Passionate about web technologies. I love working at the intersection of creativity and
           user friendly interfaces. I create memorable web experiences.

@@ -134,8 +134,8 @@ a:focus-visible {
 }
 
 ::selection {
-  background-color: var(--ink);
-  color: var(--canvas);
+  background-color: rgba(128, 128, 128, 0.25);
+  color: inherit;
 }
 
 /* ── Grid Layout Architecture ──────────────────────────────── */

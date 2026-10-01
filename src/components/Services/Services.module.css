@@ -7,7 +7,7 @@
 }
 
 .content {
-  grid-column: 1 / 7;
+  grid-column: 1 / -1;
 }
 
 .heading {
@@ -28,16 +28,16 @@
   transition: opacity 0.3s ease;
 }
 
-/* Dimming sibling items on hover using :has() */
+/* Dimming sibling items on hover */
 .list:hover:has(.item:hover) .item:not(:hover) {
-  opacity: 0.2;
+  opacity: 0.3;
 }
 
 .itemHeader {
-  padding: 32px 0;
+  padding: 24px 0;
   display: flex;
   align-items: baseline;
-  gap: 24px;
+  gap: 0;
   cursor: pointer;
 }
 
@@ -45,6 +45,9 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--soft);
+  font-variant-numeric: tabular-nums;
+  width: 10%; /* Fixed width to align titles */
+  min-width: 60px;
 }
 
 .title {
@@ -52,74 +55,103 @@
   font-weight: 500;
   letter-spacing: -0.01em;
   margin: 0;
-  transition: transform 0.3s ease;
 }
 
-.item:hover .title {
-  transform: translateX(12px);
+/* ── Accordion Layout (Desktop & Mobile) ──────────────────── */
+.accordionPreview {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Desktop Previews ──────────────────────────────────────── */
-.previewArea {
-  grid-column: 8 / 13;
-  position: relative;
+.item.active .accordionPreview {
+  grid-template-rows: 1fr;
 }
 
-.previewItem {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+.accordionPreviewInner {
+  overflow: hidden;
+}
+
+.accordionPreviewContent {
+  padding-top: 16px; /* Just enough room so the bounce doesn't clip */
+  padding-bottom: 0; /* Remove padding so image can touch the bottom */
+  /* Align with the title (width of .num) */
+  padding-left: max(10%, 60px);
+  padding-right: max(5%, 40px); /* Gives more horizontal space on the right, pulling image left */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 60px;
+}
+
+.previewTextWrapper {
+  flex: 1;
+  max-width: 600px; /* Allow text more horizontal room */
+  padding-top: 8px;
+  /* Removed massive bottom margin */
+}
+
+.previewDesc {
+  color: var(--ink); /* Bright, fully opaque text */
+  line-height: 1.5;
+  font-size: calc(18px + (24px - 18px) * var(--p)); /* Larger, highly readable font size */
+
+  /* Text reveal physics (Closing: power2.in) */
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transform: translateY(24px);
+  transition:
+    opacity 0.3s cubic-bezier(0.5, 0, 1, 1),
+    transform 0.3s cubic-bezier(0.5, 0, 1, 1);
 }
 
-.previewItem.active {
+.item.active .previewDesc {
   opacity: 1;
-  visibility: visible;
+  transform: translateY(0);
+  /* Opening: power3.out */
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+  transition-delay: 0.15s;
 }
 
 .previewImage {
-  aspect-ratio: 4 / 3;
+  width: 320px;
+  height: 160px;
+  border-radius: 4px 4px 0 0; /* Flat bottom edge */
   overflow: hidden;
-  border-radius: 4px;
-  margin-bottom: 24px;
   background: var(--line);
+  flex-shrink: 0;
+  align-self: flex-end; /* Pin to the absolute bottom of the container */
+  margin-bottom: -1px; /* Slight bleed to cover the border line */
+
+  /* Simple fade and slide up from bottom */
+  opacity: 0;
+  transform: translateY(48px);
+
+  /* Closing transition */
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.item.active .previewImage {
+  opacity: 1;
+  transform: translateY(0);
+  /* Opening wipe: 50ms Wile E. Coyote gravity delay, then bouncy overshoot */
+  transition:
+    opacity 0.4s ease 0.05s,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s;
 }
 
 .previewImage img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.2, 0, 0, 1);
+  /* Removed aggressive transform on image itself */
 }
 
-.item:hover ~ * .previewImage img,
-.previewItem.active .previewImage img {
-  transform: scale(1.05);
-}
-
-.previewDesc {
-  color: var(--soft);
-  line-height: 1.5;
-}
-
-/* ── Mobile Accordion ──────────────────────────────────────── */
-.mobilePreview {
-  display: none;
-}
-
+/* ── Mobile Adjustments ────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .services {
-    grid-template-columns: 1fr;
-  }
-  .content {
-    grid-column: 1 / -1;
-  }
-  .previewArea {
-    display: none;
-  }
   .itemHeader {
     padding: 24px 0;
   }
@@ -127,25 +159,19 @@
     font-size: 24px;
   }
   .item:hover .title {
-    transform: none; /* Disable hover translation on mobile */
+    transform: none;
   }
   .list:hover:has(.item:hover) .item:not(:hover) {
-    opacity: 1; /* Disable dimming on mobile */
+    opacity: 1;
   }
-  
-  /* CSS Grid Accordion Trick */
-  .mobilePreview {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.4s ease;
-  }
-  .mobilePreviewInner {
-    overflow: hidden;
-  }
-  .mobilePreviewInnerContent {
+  .accordionPreviewContent {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0;
+    gap: 24px;
     padding-bottom: 32px;
   }
-  .item.active .mobilePreview {
-    grid-template-rows: 1fr;
+  .previewImage {
+    width: 100%;
   }
 }
