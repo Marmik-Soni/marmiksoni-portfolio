@@ -2,14 +2,20 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { FluidScaleProvider } from '@/components/providers/FluidScaleProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'Marmik Soni — Portfolio',
   description: 'Personal portfolio of Marmik Soni',
 };
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 const initScript = `
+  // ⚠️ KEEP IN SYNC with useFluidScale.ts — same curve re-runs on resize after hydration
   (function() {
     try {
       var localTheme = window.localStorage.getItem('theme');
@@ -41,31 +47,22 @@ const initScript = `
   })();
 `;
 
-import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="preload"
-          href="/fonts/Trap-Regular.otf"
+          href="/fonts/Trap-Regular.woff2"
           as="font"
-          type="font/otf"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
         <link
           rel="preload"
-          href="/fonts/Trap-Medium.otf"
+          href="/fonts/Trap-Medium.woff2"
           as="font"
-          type="font/otf"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/Trap-SemiBold.otf"
-          as="font"
-          type="font/otf"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
         <script dangerouslySetInnerHTML={{ __html: initScript }} />

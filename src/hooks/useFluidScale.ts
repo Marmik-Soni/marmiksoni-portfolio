@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
+// ⚠️ KEEP IN SYNC with layout.tsx initScript — same curve runs before React hydrates
 const MIN_W = 1024;
 const MAX_W = 2560;
 const X1 = 0.35, Y1 = 0.15, X2 = 0.65, Y2 = 0.85;
