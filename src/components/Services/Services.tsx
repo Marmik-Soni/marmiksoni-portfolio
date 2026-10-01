@@ -2,41 +2,45 @@
 
 import { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 import SplitType from 'split-type';
 import styles from './Services.module.css';
 
-gsap.registerPlugin(ScrollTrigger);
+import designImg from '../../../public/images/service-design.jpg';
+import devImg from '../../../public/images/service-dev.jpg';
+import motionImg from '../../../public/images/service-motion.jpg';
+import strategyImg from '../../../public/images/service-strategy.jpg';
+import packageImg from '../../../public/images/service-package.jpg';
 
 const servicesData = [
   {
     num: '01',
     title: 'Design',
-    image: '/images/service-design.jpg',
+    image: designImg,
     desc: 'Pixel-perfect interfaces built around your users, your brand, and your goals. Every pixel has a reason — every layout a purpose.',
   },
   {
     num: '02',
     title: 'Development',
-    image: '/images/service-dev.jpg',
+    image: devImg,
     desc: 'Clean, performant code that brings every detail of your design to life. Fast, accessible, and built to last.',
   },
   {
     num: '03',
     title: 'Motion & Animation',
-    image: '/images/service-motion.jpg',
+    image: motionImg,
     desc: 'Meaningful motion that brings interfaces to life. From subtle micro-interactions to scroll-driven sequences — every transition is intentional.',
   },
   {
     num: '04',
     title: 'Strategy',
-    image: '/images/service-strategy.jpg',
+    image: strategyImg,
     desc: 'Great design is only effective with the right direction. I help define user journeys, information architecture, and conversion paths that turn visitors into believers.',
   },
   {
     num: '05',
     title: 'The Full Package',
-    image: '/images/service-package.jpg',
+    image: packageImg,
     desc: 'End-to-end — from the first sketch to a live, polished, launch-ready website. One person who thinks in both design and code.',
   },
 ];
@@ -44,7 +48,6 @@ const servicesData = [
 export function Services() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const [direction, setDirection] = useState<'down' | 'up'>('down');
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,25 +56,12 @@ export function Services() {
   const handleMouseEnter = (idx: number) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     hoverTimeoutRef.current = setTimeout(() => {
-      setHoverIndex((prevHover) => {
-        // Calculate direction based on what is currently open
-        const currentOpen = prevHover ?? activeIndex ?? -1;
-        if (currentOpen !== -1 && currentOpen !== idx) {
-          setDirection(idx > currentOpen ? 'down' : 'up');
-        }
-        return idx;
-      });
+      setHoverIndex(idx);
     }, 150);
   };
 
   const handleClick = (idx: number) => {
-    setActiveIndex((prevActive) => {
-      if (prevActive === idx) return null;
-      if (prevActive !== null) {
-        setDirection(idx > prevActive ? 'down' : 'up');
-      }
-      return idx;
-    });
+    setActiveIndex((prevActive) => (prevActive === idx ? null : idx));
   };
 
   const handleMouseLeave = () => {
@@ -146,7 +136,7 @@ export function Services() {
         </h2>
 
         <ul
-          className={`${styles.list} ${styles[`dir-${direction}`]}`}
+          className={styles.list}
           onMouseLeave={handleMouseLeave}
         >
           {servicesData.map((service, idx) => {
@@ -169,7 +159,12 @@ export function Services() {
                         <p className={styles.previewDesc}>{service.desc}</p>
                       </div>
                       <div className={styles.previewImage}>
-                        <img src={service.image} alt={service.title} />
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          placeholder="blur"
+                          sizes="(max-width: 1024px) 100vw, 400px"
+                        />
                       </div>
                     </div>
                   </div>

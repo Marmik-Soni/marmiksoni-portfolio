@@ -2,16 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitType from 'split-type';
+import Image from 'next/image';
+import portraitImg from '../../../public/images/portrait.jpg';
 import styles from './Editorial.module.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export function Editorial() {
   const sectionRef = useRef<HTMLElement>(null);
   const textWrapperRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const splits: SplitType[] = [];
@@ -72,7 +70,7 @@ export function Editorial() {
 
         // Animate image wrapper (Curtain Reveal)
         const imageWrapper = sectionRef.current?.querySelector(`.${styles.imageWrapper}`);
-        if (imageWrapper && imgRef.current) {
+        if (imageWrapper) {
           gsap.fromTo(
             imageWrapper,
             { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' },
@@ -102,11 +100,12 @@ export function Editorial() {
         className={styles.imageWrapper}
         style={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' }}
       >
-        <img
-          ref={imgRef}
-          src="/images/portrait.jpg"
+        <Image
+          src={portraitImg}
           alt="Editorial Portrait"
           className={styles.image}
+          placeholder="blur"
+          sizes="(max-width: 1024px) 100vw, 50vw"
         />
       </div>
       <div ref={textWrapperRef} className={styles.textWrapper}>
