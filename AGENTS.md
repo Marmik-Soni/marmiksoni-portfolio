@@ -30,3 +30,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## 4. CSS Animations & GPU Leaks
 - Avoid using `will-change: transform` permanently in CSS. It leads to GPU memory bloat and causes the same blurry rendering issues as lingering GSAP transforms. If needed, apply it dynamically and remove it after the animation.
 - Clean up dead CSS: When tearing down complex layouts, audit and remove orphaned state classes, unused React state variables, and stale overrides.
+
+## 5. Bezier Fluid Scaling Engine (`--p`)
+- **Single Source of Truth**: Sizing across all viewport widths (320px to 2560px) is driven by a single unified cubic bezier curve `cubic-bezier(0.35, 0.15, 0.65, 0.85)` exposed as CSS custom property `--p` (ranging from 0.0 to 1.0).
+- **Two In-Sync Implementation Files**: The bezier solver is intentionally implemented in exactly two places to eliminate FOUC (Flash of Unstyled Content):
+  1. `src/app/layout.tsx` (inline `<script id="fluid-scale-init">` runs before React hydration).
+  2. `src/hooks/useFluidScale.ts` (React hook tracking viewport resize after hydration).
+  *Rule*: Any change to the mathematical constants (`MIN_W`, `MAX_W`, `X1`, `Y1`, `X2`, `Y2`) MUST be mirrored in both files identically.
+- **Sizing via `--p` Token Math**: Font sizes, gaps, and margins are calculated using:
+  `calc(min + (max - min) * var(--p))`
+  Desktop values (at 1024px, `p ≈ 0.2656`) are mathematically calibrated to match exact design requirements.
+- **No Hardcoded Sizing in Media Queries**: Never add hardcoded `font-size`, `margin`, or `gap` values inside `@media (max-width: 1024px)`. Media queries must ONLY be used for structural layout shifts (e.g. `grid-template-columns`, flex directions, stacking orders, or hiding mobile nav elements).
+- **No Dual Engines or Workarounds**: Never introduce duplicate `--p-mobile` / `--p-desktop` variables, arbitrary breakpoint jumps, or raw `vw` typography overrides that break curve continuity.
+- **Side Padding (`--px`) Decoupling**: Page gutter `--px` is clamped as `clamp(20px, 5vw, var(--m))` to guarantee a comfortable 20px edge margin on mobile without collapsing to zero.
+- **Detailed Reference**: Read [`docs/BEZIER_FLUID_SCALING.md`](file:///c:/MarmikSoni/marmiksoni-portfolio/docs/BEZIER_FLUID_SCALING.md) for full derivations, breakpoint matrices, and component formula charts.
