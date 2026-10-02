@@ -3,9 +3,12 @@
 import { useEffect, useRef } from 'react';
 
 // ⚠️ KEEP IN SYNC with layout.tsx initScript — same curve runs before React hydrates
-const MIN_W = 1024;
+const MIN_W = 320;
 const MAX_W = 2560;
-const X1 = 0.35, Y1 = 0.15, X2 = 0.65, Y2 = 0.85;
+const X1 = 0.35,
+  Y1 = 0.15,
+  X2 = 0.65,
+  Y2 = 0.85;
 
 function bez(t: number, a: number, b: number): number {
   const u = 1 - t;
@@ -20,8 +23,9 @@ function bezSlope(t: number, a: number, b: number): number {
 function ease(x: number): number {
   if (x <= 0) return 0;
   if (x >= 1) return 1;
-  
-  let t = x, i;
+
+  let t = x,
+    i;
   for (i = 0; i < 8; i++) {
     const err = bez(t, X1, X2) - x;
     if (Math.abs(err) < 1e-6) break;
@@ -29,12 +33,14 @@ function ease(x: number): number {
     if (Math.abs(s) < 1e-6) break;
     t -= err / s;
   }
-  
+
   if (!(t >= 0 && t <= 1) || Math.abs(bez(t, X1, X2) - x) > 1e-4) {
-    let lo = 0, hi = 1;
+    let lo = 0,
+      hi = 1;
     t = x;
     for (i = 0; i < 30; i++) {
-      if (bez(t, X1, X2) < x) lo = t; else hi = t;
+      if (bez(t, X1, X2) < x) lo = t;
+      else hi = t;
       t = (lo + hi) / 2;
     }
   }

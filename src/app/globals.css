@@ -25,21 +25,24 @@
   --line: rgba(17, 17, 17, 0.1);
   color-scheme: light;
 
-  /* Base scale mapped by JS (p=0 below 1024px, p=1 at 2560px) */
-  --p: 0.6;
+  /* --p : 0→1 over 320→2560px (one unified engine for ALL screens)
+     Computed by JS in layout.tsx initScript + useFluidScale.ts */
+  --p: 0.5;
 
-  /* Margins and Layout */
-  --m: calc(24px + (80px - 24px) * var(--p));
-  --gap: calc(16px + (32px - 16px) * var(--p));
-  --small: calc(14px + (16px - 14px) * var(--p));
+  /* Margins, Layout, Body Font — recalibrated for 320→2560 */
+  --m: calc(4px + (80px - 4px) * var(--p));
+  --gap: calc(10px + (32px - 10px) * var(--p));
+  --small: calc(13.3px + (16px - 13.3px) * var(--p));
 
-  /* Huge Hero Typography */
-  --title: min(
-    calc(clamp(32px, 10vw, 120px) + (300px - clamp(32px, 10vw, 120px)) * var(--p)),
-    28svh
-  );
-  --lh: calc(0.92 + (0.86 - 0.92) * var(--p));
-  --track: calc((-0.045 - 0.02 * var(--p)) * 1em);
+  /* Page side padding — floors at 20px on phones, scales to --m on desktop */
+  --px: clamp(20px, 5vw, var(--m));
+
+  /* Hero Typography — same --p, recalibrated min/max values
+     Produces: 32px@320 → 100px@1024 → 160px@1440 → 228px@1920 → 288px@2560
+     Mobile media query in Hero.module.css overrides with clamp() below 1024px */
+  --title: min(calc(32px + (288px - 32px) * var(--p)), 28svh);
+  --lh: calc(0.94 + (0.86 - 0.94) * var(--p));
+  --track: calc((-0.038 - 0.027 * var(--p)) * 1em);
   --wght: 500;
 }
 
@@ -115,7 +118,7 @@ a:focus-visible {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  padding: 0 var(--m);
+  padding: 0 var(--px);
 }
 
 .grid-12 {

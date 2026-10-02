@@ -22,7 +22,7 @@ const initScript = `
       var theme = localTheme ? localTheme : 'light';
       document.documentElement.setAttribute('data-theme', theme);
 
-      var MIN_W = 1024, MAX_W = 2560;
+      var MIN_W = 320, MAX_W = 2560;
       var X1 = 0.35, Y1 = 0.15, X2 = 0.65, Y2 = 0.85;
       function bez(t, a, b) { var u = 1 - t; return 3 * u * u * t * a + 3 * u * t * t * b + t * t * t; }
       function bezSlope(t, a, b) { var u = 1 - t; return 3 * u * u * a + 6 * u * t * (b - a) + 3 * t * t * (1 - b); }
