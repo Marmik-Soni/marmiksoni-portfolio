@@ -1,6 +1,6 @@
 .bar {
   align-items: center;
-  padding-top: calc(var(--m) * 1);
+  padding-top: max(var(--px), env(safe-area-inset-top, 0px));
   margin-bottom: calc(var(--m) * 1.8);
 }
 
@@ -19,7 +19,7 @@
   grid-column: 4 / 10;
   display: flex;
   justify-content: center;
-  gap: calc(24px + (48px - 24px) * var(--p));
+  gap: calc(15px + (48px - 15px) * var(--p));
   font-weight: 500;
 }
 

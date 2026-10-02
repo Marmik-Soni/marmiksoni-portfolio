@@ -12,29 +12,29 @@ export function Navbar() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Very smooth, effortless full-bar fade in
-      gsap.fromTo(
-        barRef.current,
-        { opacity: 0, y: -15 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: 'power3.out',
-          delay: 0.4, // Delays just enough so the eye is drawn to the Hero text first
-          onComplete: () => {
-            if (barRef.current) {
-              barRef.current.style.transform = 'none';
-            }
-          },
-        }
-      );
+      gsap.to(barRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1.5,
+        ease: 'power3.out',
+        delay: 0.4, // Delays just enough so the eye is drawn to the Hero text first
+        onComplete: () => {
+          if (barRef.current) {
+            barRef.current.style.transform = 'none';
+          }
+        },
+      });
     });
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <header className={`grid-12 ${styles.bar}`} ref={barRef}>
+    <header
+      className={`grid-12 ${styles.bar}`}
+      ref={barRef}
+      style={{ opacity: 0, transform: 'translateY(-15px)' }}
+    >
       <Link href="#top" className={styles.name}>
         Marmik Soni
       </Link>
