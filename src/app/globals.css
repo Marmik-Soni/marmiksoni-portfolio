@@ -40,7 +40,7 @@
   /* Hero Typography — same --p, recalibrated min/max values
      Produces: 32px@320 → 100px@1024 → 160px@1440 → 228px@1920 → 288px@2560
      Mobile media query in Hero.module.css overrides with clamp() below 1024px */
-  --title: min(calc(32px + (288px - 32px) * var(--p)), 28svh);
+  --title: min(calc(32px + (288px - 32px) * var(--p)), 27svh);
   --lh: calc(0.94 + (0.86 - 0.94) * var(--p));
   --track: calc((-0.038 - 0.027 * var(--p)) * 1em);
   --wght: 500;
