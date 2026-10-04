@@ -16,10 +16,12 @@ export function Editorial() {
 
     const ctx = gsap.context(() => {
       if (textWrapperRef.current) {
-        const leadElement = textWrapperRef.current.querySelector(`.${styles.lead}`);
+        const leadElements = textWrapperRef.current.querySelectorAll(`.${styles.lead}`);
         const subElements = textWrapperRef.current.querySelectorAll(`.${styles.sub}`);
 
-        if (leadElement) splits.push(new SplitType(leadElement as HTMLElement, { types: 'lines' }));
+        leadElements.forEach((el) =>
+          splits.push(new SplitType(el as HTMLElement, { types: 'lines' }))
+        );
         subElements.forEach((el) =>
           splits.push(new SplitType(el as HTMLElement, { types: 'lines' }))
         );
@@ -36,21 +38,6 @@ export function Editorial() {
             wrapper.appendChild(line);
           });
         });
-
-        // Animate label
-        const label = textWrapperRef.current.querySelector(`.${styles.label}`);
-        if (label) {
-          gsap.from(label, {
-            scrollTrigger: {
-              trigger: textWrapperRef.current,
-              start: 'top 75%',
-            },
-            opacity: 0,
-            y: 20,
-            duration: 1.0,
-            ease: 'power3.out',
-          });
-        }
 
         // Collect all lines
         const allLines = splits.flatMap((s) => s.lines);
@@ -109,14 +96,14 @@ export function Editorial() {
         />
       </div>
       <div ref={textWrapperRef} className={styles.textWrapper}>
-        <span className={styles.label}>Who am I</span>
+        <p className={styles.lead}>Hi, I&apos;m Marmik.</p>
         <p className={styles.lead}>
-          Passionate about web technologies. I love working at the intersection of creativity and
-          user friendly interfaces. I create memorable web experiences.
+          Passionate about web development. I thrive at the intersection of creative design and
+          intuitive interfaces. I craft memorable digital experiences for users and businesses.
         </p>
         <p className={styles.sub}>
-          When I&apos;m not building or exploring new web experiences, I&apos;m probably playing
-          games or watching football.
+          When I&apos;m not building or exploring new tech, I read books, write poetry, or just look
+          for inspiration.
         </p>
       </div>
     </section>
