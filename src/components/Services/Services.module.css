@@ -107,27 +107,50 @@
   }
 
   .item {
-    grid-template-columns: 2fr 1fr 6fr;
-    gap: 20px;
-    padding: 24px 0;
-  }
-
-  .image {
-    grid-column: 1 / 2;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 32px 0;
   }
 
   .num {
-    grid-column: 2 / 3;
+    position: absolute;
+    top: 32px; /* Align perfectly with the top of textBlock */
+    left: 0;
     justify-self: start;
+    font-size: clamp(24px, 7vw, 32px); /* Exact match with title */
+    line-height: 1.2;
+    letter-spacing: -0.02em;
   }
 
   .textBlock {
-    grid-column: 3 / 4;
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     margin-left: 0;
     width: 100%;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 
   .title {
-    font-size: clamp(16px, 4vw, 20px);
+    margin-left: 56px; /* Increased margin to fit the larger number comfortably */
+    font-size: clamp(24px, 7vw, 32px);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .desc {
+    margin-left: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  .image {
+    order: 2;
+    width: 100%;
+    margin-top: 8px;
   }
 }
