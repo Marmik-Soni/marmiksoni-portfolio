@@ -10,163 +10,124 @@
   grid-column: 1 / -1;
 }
 
+/* ── Header ────────────────────────────────────────────────── */
+.header {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: calc(15px + (48px - 15px) * var(--p));
+  margin-bottom: calc(32px + (64px - 32px) * var(--p));
+}
+
 .heading {
-  font-size: calc(26px + (48px - 26px) * var(--p));
+  grid-column: 1 / 7;
+  font-size: calc(32px + (56px - 32px) * var(--p));
   font-weight: 500;
   letter-spacing: -0.02em;
-  margin-bottom: 48px;
   line-height: 1.1;
 }
 
+/* ── List ──────────────────────────────────────────────────── */
 .list {
   list-style: none;
   border-top: 1px solid var(--line);
 }
 
 .item {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: calc(15px + (48px - 15px) * var(--p));
+  align-items: start;
+  padding: 40px 0;
   border-bottom: 1px solid var(--line);
-  transition: opacity 0.3s ease;
 }
 
-/* Dimming sibling items on hover */
-.list:hover:has(.item:hover) .item:not(:hover) {
-  opacity: 0.3;
+/* ── Image ─────────────────────────────────────────────────── */
+.image {
+  grid-column: 1 / 4;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--line);
 }
 
-.itemHeader {
-  padding: 24px 0;
-  display: flex;
-  align-items: baseline;
-  gap: 0;
-  cursor: pointer;
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
+/* ── Number ────────────────────────────────────────────────── */
 .num {
-  font-size: 14px;
+  grid-column: 6 / 7;
+  justify-self: end;
+  font-size: calc(21px + (32px - 21px) * var(--p));
   font-weight: 500;
-  color: var(--soft);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
   font-variant-numeric: tabular-nums;
-  width: 10%; /* Fixed width to align titles */
-  min-width: 60px;
+}
+
+/* ── Text Block ────────────────────────────────────────────── */
+.textBlock {
+  grid-column: 7 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: calc(-0.5 * (15px + (48px - 15px) * var(--p)));
+  width: calc(100% + 0.5 * (15px + (48px - 15px) * var(--p)));
 }
 
 .title {
   font-size: calc(21px + (32px - 21px) * var(--p));
   font-weight: 500;
   letter-spacing: -0.01em;
+  line-height: 1.15;
   margin: 0;
 }
 
-/* ── Accordion Layout (Desktop & Mobile) ──────────────────── */
-.accordionPreview {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+.desc {
+  color: var(--soft);
+  font-size: calc(16px + (24px - 16px) * var(--p));
+  line-height: 1.6;
+  max-width: 600px;
 }
 
-.item.active .accordionPreview {
-  grid-template-rows: 1fr;
-}
-
-.accordionPreviewInner {
-  overflow: hidden;
-}
-
-.accordionPreviewContent {
-  padding-top: 16px; /* Just enough room so the bounce doesn't clip */
-  padding-bottom: 0; /* Remove padding so image can touch the bottom */
-  /* Align with the title (width of .num) */
-  padding-left: max(10%, 60px);
-  padding-right: max(5%, 40px); /* Gives more horizontal space on the right, pulling image left */
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 60px;
-}
-
-.previewTextWrapper {
-  flex: 1;
-  max-width: 600px; /* Allow text more horizontal room */
-  padding-top: 8px;
-}
-
-.previewDesc {
-  color: var(--ink); /* Bright, fully opaque text */
-  line-height: 1.5;
-  font-size: calc(16px + (24px - 16px) * var(--p)); /* Larger, highly readable font size */
-
-  /* Text reveal physics (Closing: power2.in) */
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 0.3s cubic-bezier(0.5, 0, 1, 1),
-    transform 0.3s cubic-bezier(0.5, 0, 1, 1);
-}
-
-.item.active .previewDesc {
-  opacity: 1;
-  transform: translateY(0);
-  /* Opening: power3.out */
-  transition:
-    opacity 0.6s cubic-bezier(0.2, 0, 0, 1),
-    transform 0.6s cubic-bezier(0.2, 0, 0, 1);
-  transition-delay: 0.15s;
-}
-
-.previewImage {
-  width: 320px;
-  height: 160px;
-  border-radius: 4px 4px 0 0; /* Flat bottom edge */
-  overflow: hidden;
-  background: var(--line);
-  flex-shrink: 0;
-  align-self: flex-end; /* Pin to the absolute bottom of the container */
-  margin-bottom: -1px; /* Slight bleed to cover the border line */
-
-  /* Simple fade and slide up from bottom */
-  opacity: 0;
-  transform: translateY(48px);
-
-  /* Closing transition */
-  transition:
-    opacity 0.3s ease,
-    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.item.active .previewImage {
-  opacity: 1;
-  transform: translateY(0);
-  /* Opening wipe: 50ms delay, then a bouncy overshoot with a slow, floaty landing */
-  transition:
-    opacity 0.5s ease 0.05s,
-    transform 0.85s cubic-bezier(0.25, 1.5, 0.5, 1) 0.05s;
-}
-
-.previewImage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ── Mobile Adjustments ────────────────────────────────────── */
+/* ── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .itemHeader {
+  .header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+  }
+
+  .heading {
+    grid-column: 1 / -1;
+  }
+
+  .item {
+    grid-template-columns: 2fr 1fr 6fr;
+    gap: 20px;
     padding: 24px 0;
   }
-  .title {
-    font-size: clamp(20px, 5vw, 24px);
+
+  .image {
+    grid-column: 1 / 2;
   }
-  .list:hover:has(.item:hover) .item:not(:hover) {
-    opacity: 1;
+
+  .num {
+    grid-column: 2 / 3;
+    justify-self: start;
   }
-  .accordionPreviewContent {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 0;
-    gap: 24px;
-    padding-bottom: 32px;
-  }
-  .previewImage {
+
+  .textBlock {
+    grid-column: 3 / 4;
+    margin-left: 0;
     width: 100%;
+  }
+
+  .title {
+    font-size: clamp(16px, 4vw, 20px);
   }
 }

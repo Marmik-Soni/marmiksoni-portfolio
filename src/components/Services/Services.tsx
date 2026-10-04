@@ -1,174 +1,169 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import Image from 'next/image';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitType from 'split-type';
+import Image from 'next/image';
 import styles from './Services.module.css';
 
 import designImg from '../../../public/images/service-design.jpg';
 import devImg from '../../../public/images/service-dev.jpg';
-import motionImg from '../../../public/images/service-motion.jpg';
 import strategyImg from '../../../public/images/service-strategy.jpg';
-import packageImg from '../../../public/images/service-package.jpg';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const servicesData = [
   {
-    num: '01',
+    num: '01.',
     title: 'Design',
     image: designImg,
-    desc: 'Pixel-perfect interfaces built around your users, your brand, and your goals. Every pixel has a reason — every layout a purpose.',
+    desc: 'Good design is a business decision. I create interfaces and visual systems built around how people actually experience the web, so every page feels distinctive, intuitive and aligned with your goals.',
   },
   {
-    num: '02',
-    title: 'Development',
+    num: '02.',
+    title: 'Creative Development',
     image: devImg,
-    desc: 'Clean, performant code that brings every detail of your design to life. Fast, accessible, and built to last.',
+    desc: 'Performance is part of the brief. I build fast, secure websites and web applications with purposeful interaction that improves usability, tested across devices and engineered to grow with your business.',
   },
   {
-    num: '03',
-    title: 'Motion & Animation',
-    image: motionImg,
-    desc: 'Meaningful motion that brings interfaces to life. From subtle micro-interactions to scroll-driven sequences — every transition is intentional.',
-  },
-  {
-    num: '04',
-    title: 'Strategy',
+    num: '03.',
+    title: 'Search & AI Visibility',
     image: strategyImg,
-    desc: 'Great design is only effective with the right direction. I help define user journeys, information architecture, and conversion paths that turn visitors into believers.',
-  },
-  {
-    num: '05',
-    title: 'The Full Package',
-    image: packageImg,
-    desc: 'End-to-end — from the first sketch to a live, polished, launch-ready website. One person who thinks in both design and code.',
+    desc: 'Your next client is searching, and increasingly asking AI. I make sure the answer they find is you, through SEO, AEO/GEO, sharp copywriting and analytics that turn attention into enquiries.',
   },
 ];
 
 export function Services() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const handleMouseEnter = (idx: number) => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoverIndex(idx);
-    }, 150);
-  };
-
-  const handleClick = (idx: number) => {
-    setActiveIndex((prevActive) => (prevActive === idx ? null : idx));
-  };
-
-  const handleMouseLeave = () => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    setHoverIndex(null);
-  };
-
   useEffect(() => {
-    let split: SplitType | null = null;
+    const splits: SplitType[] = [];
 
     const ctx = gsap.context(() => {
-      // 1. Animate Heading (Line by Line Cascade)
-      if (headingRef.current) {
-        split = new SplitType(headingRef.current, { types: 'lines' });
-
-        // Wrap lines in hidden containers for mask effect
-        split.lines?.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.display = 'block';
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.paddingBottom = '0.15em';
-          wrapper.style.marginBottom = '-0.15em';
-          line.parentNode?.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-
-        gsap.from(split.lines, {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-          },
-          y: '150%',
-          duration: 1.0,
-          stagger: 0.08,
+      // 1. Animate header
+      const header = sectionRef.current?.querySelector(`.${styles.header}`);
+      if (header) {
+        gsap.from(header, {
+          scrollTrigger: { trigger: header, start: 'top 85%' },
+          y: 30,
+          opacity: 0,
+          duration: 1,
           ease: 'power3.out',
         });
       }
 
-      // 2. Animate List Items (Staggered Fade Up)
-      const listItems = sectionRef.current?.querySelectorAll(`.${styles.item}`);
-      if (listItems && listItems.length > 0) {
-        gsap.fromTo(
-          listItems,
-          { opacity: 0, y: 30 },
-          {
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 65%',
+      // 2. Animate each item individually
+      const items = sectionRef.current?.querySelectorAll(`.${styles.item}`);
+      items?.forEach((item) => {
+        const image = item.querySelector(`.${styles.image}`);
+        const num = item.querySelector(`.${styles.num}`);
+        const title = item.querySelector(`.${styles.title}`);
+        const desc = item.querySelector(`.${styles.desc}`);
+
+        // Setup text splitting
+        const splitTitle = new SplitType(title as HTMLElement, { types: 'lines' });
+        const splitDesc = new SplitType(desc as HTMLElement, { types: 'lines' });
+        splits.push(splitTitle, splitDesc);
+
+        // Wrap lines for masked reveal
+        [splitTitle, splitDesc].forEach((split) => {
+          split.lines?.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.display = 'block';
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.paddingBottom = '0.15em';
+            wrapper.style.marginBottom = '-0.15em';
+            line.parentNode?.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+        });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+          },
+        });
+
+        // Unidirectional reveal: Image slides UP inside its mask, exactly matching the text's direction
+        const imgElement = image?.querySelector('img');
+        if (image && imgElement) {
+          // Start completely pushed down inside the overflow:hidden container
+          gsap.set(imgElement, { y: '100%' });
+
+          tl.to(
+            imgElement,
+            { y: '0%', duration: 1.2, ease: 'power3.out' },
+            0 // Triggers at exactly the same time as the text slide-up
+          );
+        }
+
+        // Fade in number
+        if (num) {
+          tl.from(num, { opacity: 0, x: -10, duration: 0.8, ease: 'power2.out' }, 0.2);
+        }
+
+        // Slide up text lines
+        const lines = [...(splitTitle.lines || []), ...(splitDesc.lines || [])];
+        if (lines.length > 0) {
+          tl.from(
+            lines,
+            {
+              y: '150%',
+              duration: 1.0,
+              stagger: 0.05,
+              ease: 'power3.out',
             },
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: 'power3.out',
-          }
-        );
-      }
+            0.2
+          );
+
+          // Clear GSAP inline styles on complete to prevent font rendering bugs (AGENTS.md rule)
+          tl.call(() => {
+            lines.forEach((line) => {
+              (line as HTMLElement).style.transform = 'none';
+            });
+          });
+        }
+      });
     }, sectionRef);
 
     return () => {
       ctx.revert();
-      if (split) split.revert();
-      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      splits.forEach((s) => s.revert());
     };
   }, []);
 
   return (
     <section ref={sectionRef} className={styles.services} id="work">
       <div className={styles.content}>
-        <h2 ref={headingRef} className={styles.heading}>
-          I can help you with
-        </h2>
+        <div className={styles.header}>
+          <h2 ref={headingRef} className={styles.heading}>
+            Design, build and visibility,
+            <br />
+            handled end to end.
+          </h2>
+        </div>
 
-        <ul className={styles.list} onMouseLeave={handleMouseLeave}>
-          {servicesData.map((service, idx) => {
-            const isActive = activeIndex === idx || hoverIndex === idx;
-            return (
-              <li
-                key={service.num}
-                className={`${styles.item} ${isActive ? styles.active : ''}`}
-                onMouseEnter={() => handleMouseEnter(idx)}
-              >
-                <div className={styles.itemHeader} onClick={() => handleClick(idx)}>
-                  <span className={styles.num}>[{service.num}]</span>
-                  <h3 className={styles.title}>{service.title}</h3>
-                </div>
-
-                <div className={styles.accordionPreview}>
-                  <div className={styles.accordionPreviewInner}>
-                    <div className={styles.accordionPreviewContent}>
-                      <div className={styles.previewTextWrapper}>
-                        <p className={styles.previewDesc}>{service.desc}</p>
-                      </div>
-                      <div className={styles.previewImage}>
-                        <Image
-                          src={service.image}
-                          alt={service.title}
-                          placeholder="blur"
-                          sizes="(max-width: 1024px) 100vw, 400px"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            );
-          })}
+        <ul className={styles.list}>
+          {servicesData.map((service) => (
+            <li key={service.num} className={styles.item}>
+              <div className={styles.image}>
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  placeholder="blur"
+                  sizes="(max-width: 1024px) 100px, 160px"
+                />
+              </div>
+              <span className={styles.num}>{service.num}</span>
+              <div className={styles.textBlock}>
+                <h3 className={styles.title}>{service.title}</h3>
+                <p className={styles.desc}>{service.desc}</p>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </section>
