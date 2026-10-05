@@ -3,8 +3,81 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marmik Soni – Coming Soon</title>
-  <meta name="description" content="Designing modern and engaging digital experiences for brands and businesses.">
+  <title>Marmik Soni – Creative Developer & Designer</title>
+  <meta name="description" content="Designing modern and engaging digital experiences for brands and businesses. New portfolio arriving soon.">
+  <meta name="keywords" content="web consultant, website repair, fix broken website, speed optimization, freelance developer, custom business websites, front-end developer">
+  <link rel="canonical" href="https://marmiksoni.co/">
+  <meta name="theme-color" content="#0d0d0d">
+
+  <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://marmiksoni.co/">
+  <meta property="og:title" content="Marmik Soni – Creative Developer & Designer">
+  <meta property="og:description" content="Designing modern and engaging digital experiences for brands and businesses. New portfolio arriving soon.">
+  <meta property="og:image" content="https://marmiksoni.co/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Marmik Soni">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://marmiksoni.co/">
+  <meta name="twitter:title" content="Marmik Soni – Creative Developer & Designer">
+  <meta name="twitter:description" content="Designing modern and engaging digital experiences for brands and businesses. New portfolio arriving soon.">
+  <meta name="twitter:image" content="https://marmiksoni.co/og-image.png">
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Marmik Soni – Web Consultant & Developer",
+    "url": "https://marmiksoni.co",
+    "image": "https://marmiksoni.co/og-image.png",
+    "description": "Freelance web consultant and developer helping businesses fix broken websites, optimize performance, and build custom web applications.",
+    "founder": {
+      "@type": "Person",
+      "name": "Marmik Soni",
+      "jobTitle": "Creative Developer & Designer",
+      "sameAs": [
+        "https://linkedin.com/in/marmiksoni",
+        "https://bsky.app/profile/marmiksoni.co"
+      ]
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Web Development & Consulting Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Website Troubleshooting & Bug Fixing",
+            "description": "Diagnosing and repairing broken layouts, mobile responsiveness issues, speed bottlenecks, and script errors."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Business Website Development",
+            "description": "Full-cycle web development for businesses and startups looking to establish an authoritative online presence."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Performance & Core Web Vitals Optimization",
+            "description": "Speed optimization, asset compression, and architectural refactoring for high search rankings and smooth user experience."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- Preload critical fonts to eliminate FOUT -->
   <link rel="preload" href="fonts/Trap-Regular.otf" as="font" type="font/otf" crossorigin>
@@ -71,8 +144,8 @@
       };
 
       window.addEventListener('mousemove', (e) => {
-        // Ignore synthetic mouse events that fire right after a touch tap
-        if (Date.now() - lastTouchTime < 500) return;
+        // Ignore synthetic mouse events that fire after a touch tap
+        if (Date.now() - lastTouchTime < 1000) return;
         updateMouse(e.clientX, e.clientY);
       });
       
@@ -93,11 +166,13 @@
       });
 
       document.addEventListener('mouseleave', () => {
+        if (Date.now() - lastTouchTime < 1000) return;
         cursor.classList.add('hidden');
         isVisible = false;
       });
 
       document.addEventListener('mouseenter', (e) => {
+        if (Date.now() - lastTouchTime < 1000) return;
         updateMouse(e.clientX, e.clientY);
       });
 
