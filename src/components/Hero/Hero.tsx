@@ -48,13 +48,10 @@ export function Hero() {
       </h1>
       <div className={styles.lede}>
         <div className={styles.wordWrap}>
-          <span ref={addToWordsRef}>Designing and building</span>
+          <span ref={addToWordsRef}>Shaping web experiences</span>
         </div>
         <div className={styles.wordWrap}>
-          <span ref={addToWordsRef}>digital experiences that work</span>
-        </div>
-        <div className={styles.wordWrap}>
-          <span ref={addToWordsRef}>for users and business goals.</span>
+          <span ref={addToWordsRef}>around users and business goals.</span>
         </div>
       </div>
     </main>

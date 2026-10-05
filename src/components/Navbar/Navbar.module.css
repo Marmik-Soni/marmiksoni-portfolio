@@ -2,6 +2,7 @@
   align-items: center;
   padding-top: calc(var(--m) * 1);
   margin-bottom: calc(var(--m) * 1.8);
+  font-size: calc(17px + (20px - 17px) * var(--p));
 }
 
 .name {

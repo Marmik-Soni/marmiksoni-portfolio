@@ -1,7 +1,7 @@
 .hero {
   flex: 1;
   align-content: start;
-  padding-top: 17vh;
+  padding-top: 15vh;
   padding-bottom: var(--m);
   position: relative;
   grid-template-rows: auto auto 1fr;
@@ -36,7 +36,7 @@
   margin-bottom: calc(var(--title) * (var(--lh) * 0.5 - 0.19) - 0.4em);
   margin-top: 0;
   color: var(--soft);
-  font-size: calc(18px + (24px - 18px) * var(--p));
+  font-size: calc(20px + (28px - 20px) * var(--p));
   line-height: 1.4;
   font-weight: 400;
   text-align: right;
