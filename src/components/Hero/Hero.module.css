@@ -1,7 +1,7 @@
 .hero {
   flex: 1;
   align-content: start;
-  padding-top: 13vh;
+  padding-top: 17vh;
   padding-bottom: var(--m);
   position: relative;
   grid-template-rows: auto auto 1fr;
